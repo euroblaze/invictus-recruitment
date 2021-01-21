@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+    id="applicantCV_template"
+    model="hr.applicant"
+    string="Applicant CV"
+    report_type="qweb-pdf"
+    name="applicant_tracking_system.applicantCV"
+    file="applicant_tracking_system.applicantCV"
+     menu="True"
+    print_report_name="object.pdf_name_applicant + '.pdf'"
+    />
+
+    <report
+    id="anonymousCV_template"
+    model="hr.applicant"
+    string="Anonymous CV"
+    report_type="qweb-pdf"
+    name="applicant_tracking_system.anonymousCV"
+    file="applicant_tracking_system.anonymousCV"
+     menu="True"
+    print_report_name = "object.pdf_name_anonymous + '.pdf'"
+    />
+
+</odoo>

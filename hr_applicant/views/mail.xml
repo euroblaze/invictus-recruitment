@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="mail" name="Mail">
+        <t t-name="website.profile">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <t t-set="additional_title">Send Email</t>
+                    <div id="wrap" class="js_hr_recruitment">
+                        <section class="pb32 pt32 o_colored_level">
+                            <div class="container">
+                                <div class="oe_structure">
+
+                                </div>
+                                <div class="oe_structure oe_editable">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <form method="POST">
+                                                <div class="form-group">
+
+                                                    <label for="exampleInputName">Name <inline class="text-danger"> * </inline></label>
+                                                    <input type="text" class="form-control" name="name" aria-label="name"
+                                                           t-att-value="user.partner_id.name" required="1"/>
+                                                    <label for="exampleInputEmail1">Email address <inline class="text-danger"> * </inline> </label>
+                                                    <input type="email" class="form-control" name="email" aria-label="email"
+                                                           t-att-value="user.email" required="1"/>
+                                                    <label for="exampleInputNumber">Phone Number <inline class="text-danger"> * </inline> </label>
+                                                    <input type="tel" class="form-control " name="phone_number" aria-label="phone_number"
+                                                           t-att-value="user.partner_id.phone" required="1"/>
+                                                    <label for="exampleInputCompanyName">Company Name <inline class="text-danger"> * </inline> </label>
+                                                    <input type="text" class="form-control " name="company_name" aria-label="name"
+                                                           t-att-value="user.partner_id.company_name or user.partner_id.parent_id.name" required="1"/>
+                                                </div>
+
+
+                                                <button type="submit" class="btn btn-lg btn-primary" aria-label="email" title="email">Download CV</button>
+                                                <a  style='text-decoration: none;' class="o_default_snippet_text" t-attf-href="/profile/#{ slug(applicant) }" role="button">Back to profile</a>
+                                            </form>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="oe_structure"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="oe_structure">
+
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

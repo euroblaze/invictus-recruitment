@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_suggest" model="mail.template">
+          <field name="name">CV suggest</field>
+          <field name="subject">Suggested applicants</field>
+          <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+          <field name="auto_delete" eval="False"/>
+          <field name="report_template" ref="applicantCV_template"/>
+          <field name="report_name">Applicant CV</field>
+	  <field name="body_html">
+<![CDATA[
+            Here is a applicant you may be interested in.
+	    ]]>
+	  </field>
+       </record>
+    </data>
+</odoo>

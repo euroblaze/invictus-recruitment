@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.cron" id="send_update_mail_cron">
+            <field name="name">Send CVupdate mail</field>
+            <field name="active" eval="False"/>
+            <field name="interval_number">6</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'hr.applicant'"/>
+            <field name="function" eval="'send_update_mail_all'"/>
+        </record>
+    </data>
+</odoo>

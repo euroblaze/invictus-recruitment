@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="first_time_field" model="ir.ui.view">
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h2" position="after">
+                    <p><field name="first_time"/><b>  First time user</b></p>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="years_of_experience" string="Years of experience"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="remove_summary" model="ir.ui.view">
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="model">hr.applicant</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='description']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+        <record id="remove_degree" model="ir.ui.view">
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="model">hr.applicant</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type_id']" position="replace">
+                </xpath>
+            </field>
+        </record>
+        <record id="cv_form" model="ir.ui.view">
+            <field name="name">cvform</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <sheet>
+                    <notebook>
+                        <page name="skills" string="Skills">
+                            <group>
+                                <field name="certificates" string="Certificates"/>
+                                <field name="key_skills" string="Key skills"/>
+                                <field name="languages" string="Languages" widget="one2many">
+                                    <tree>
+                                        <field name="language"/>
+                                        <field name="proficiency"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="experience" string="Experience">
+                            <field name="experience_ids" widget="one2many">
+                                <tree>
+                                    <field name="title"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="company"/>
+                                    <field name="location"/>
+                                    <field name="projects"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="education" string="Education">
+                            <field name="education" widget="one2many">
+                                <tree>
+                                    <field name="type"/>
+                                    <field name="school"/>
+                                    <field name="university"/>
+                                    <field name="faculty"/>
+                                    <field name="degree"/>
+                                    <field name="field_of_study"/>
+                                    <field name="grade"/>
+                                    <field name="from_date"/>
+                                    <field name="to_date"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="professional_profile" string="Professional Profile">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </field>
+        </record>
+    <record id="experience_form" model="ir.ui.view">
+           <field name="name">Experience</field>
+           <field name="model">hr.applicant.experience</field>
+           <field name="arch" type="xml">
+               <form string="Experience">
+                   <group>
+                     <field name="title"/>
+                   <group>
+                     <field name="start_date"/>
+                     <field name="end_date"/>
+                   <!--<field name="project_in_work"/>-->
+                   </group>
+                   <group>
+                     <field name="company"/>
+                     <field name="location"/>
+                   </group>
+                     <field name="projects"/>
+                   </group>
+               </form>
+           </field>
+    </record>
+        <record id="experience_form_parent" model="ir.actions.act_window">
+            <field name="name">Experience_view</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.applicant.experience</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="experience_form"/>
+        </record>
+
+        <record id="education_form" model="ir.ui.view">
+            <field name="name">Education</field>
+            <field name="model">hr.applicant.education</field>
+            <field name="arch" type="xml">
+                <form string="Education">
+                    <group>
+                        <group>
+                            <field name="type"/>
+                            <field name="university" attrs="{'invisible':[('type', '!=', 'university')]}"/>
+                            <field name="faculty" attrs="{'invisible':[('type', '!=', 'university')]}"/>
+                            <field name="school" attrs="{'invisible':[('type', '=', 'university')]}"/>
+                            <field name="degree"/>
+                            <field name="field_of_study"/>
+                            <field name="grade"/>
+                        </group>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="language_form" model="ir.ui.view">
+            <field name="name">Language</field>
+            <field name="model">hr.applicant.language</field>
+            <field name="arch" type="xml">
+                <form string="Experience">
+                    <group>
+                        <field name="language"/>
+                        <field name="proficiency"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="education_form_parent" model="ir.actions.act_window">
+            <field name="name">education_view</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.applicant.education</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="experience_form"/>
+        </record>
+    </data>
+</odoo>

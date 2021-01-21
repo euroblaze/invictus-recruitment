@@ -1,0 +1,14 @@
+@media (max-width: 550px) {
+    .table-text-size {
+        font-size:10px !important;
+    }
+}
+@media (max-width: 365px) {
+    .table-text-size {
+        font-size:8px !important;
+    }
+}
+
+.padding-equal {
+    padding: 0 1.95rem;
+}

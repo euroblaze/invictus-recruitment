@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/hr_applicant/static/src/css/custom.css"/>
+            <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css"/>
+        </xpath>
+    </template>
+    <template id="layout_inherit" inherit_id="website.layout">
+        <xpath expr="//div[@id='wrapwrap']" position="after">
+            <script>
+                function datesSorter(a, b) {
+                date_a = a.split(">")[1].split("&lt;")[0]
+                date_b = b.split(">")[1].split("&lt;")[0]
+                if (new Date(date_a) &lt; new Date(date_b)) return 1;
+                if (new Date(date_a) > new Date(date_b)) return -1;
+                return 0;}
+            </script>
+            <script>
+                function customSorter(a, b)
+                {
+                    if (a.split("years")[0])
+                    {
+                        year_a = a.split("&lt;span>")[1]
+                        if (year_a)
+                        {
+                        year_a = parseInt(year_a.slice(0,2))
+                        mount_a = a.split("&lt;span>")[2]
+                        mount_a = parseInt(mount_a.slice(0,2))
+                        }
+                    }else {
+                        return -1;
+                    }
+                    if (b.split("years")[0])
+                    {
+                        year_b = b.split("&lt;span>")[1]
+                        if (year_b)
+                        {
+                            year_b = parseInt(year_b.slice(0,2))
+                            mount_b = b.split("&lt;span>")[2]
+                            mount_b = parseInt(mount_b.slice(0,2))
+                        }
+                    }else {
+                        return 1;
+                    }
+                    if ((year_a > year_b)) return 1;
+                    if ((year_b > year_a)) return -1;
+                    if( (typeof mount_a !== 'undefined') &amp; (typeof mount_b !== 'undefined') )
+                    {
+                        if ((year_a === year_b) &amp; (mount_a > mount_b)) return 1;
+                        if ((year_a === year_b) &amp; (mount_b > mount_a)) return -1;
+                    }
+                }
+                </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"/>
+            <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"/>
+        </xpath>
+    </template>
+    <template id="profiles" name="Profile">
+        <t t-name="website.profile">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_title pt32 pb32 o_colored_level" data-vcss="001" data-snippet="s_title" data-name="Title">
+                        <div class="container s_allow_columns">
+                            <h1 style="text-align: center;">
+                                <font style="font-size: 62px;">Developer Profiles</font>
+                            </h1>
+                        </div>
+                    </section>
+                    <section class="s_website_form pt16 pb16 o_colored_level">
+                        <div class="container">
+                            <form method="GET">
+                                <div class="s_col_no_bgcolor">
+                                    <div class="form-group  col-12  s_website_form_model_required">
+                                        <input type="search" class="form-control s_website_form_input" name="technology" required="true" t-attf-placeholder="{{placeholder_value}}"
+                                               aria-label="Search" t-att-value="search_term"/>
+                                    </div>
+                                    <div class="form-group col-12 s_website_form_submit text-left s_website_form_no_submit_label">
+                                        <button class="btn btn-primary btn-lg o_default_snippet_text" type="submit" aria-label="Search">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <section class="s_text_block pt32 o_colored_level pb0" data-snippet="s_text_block" data-name="Text" name="table">
+                        <div class="s_allow_columns container padding-equal">
+                            <span class="ml-2 float-right">Results: <span t-esc="number"/></span>
+                            <table class="table table-bordered table-text-size table-hover"
+                                   id="table"
+                                   data-toggle="table"
+                                   data-pagination="true"
+                                   data-page-number="1"
+                                   data-pagination-pre-text="Prev"
+                                   data-pagination-next-text="Next">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <b>Name<br/></b>
+                                        </th>
+                                        <th>
+                                            <b>Title of application<br/></b>
+                                        </th>
+                                        <th data-sortable="true" data-sorter="customSorter">
+                                            <b>Years of experience<br/></b>
+                                        </th>
+                                        <th>
+                                            <b>Number of projects<br/></b>
+                                        </th>
+                                        <th>
+                                            <b>Tags</b>
+                                            <br/>
+                                        </th>
+                                        <th data-sortable="true" data-sorter="datesSorter">
+                                            <b>Last updated</b>
+                                        </th>
+                                        <th>
+                                            <b>Country</b>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="applicants" t-as="applicant">
+                                        <tr t-if="applicant.active or user">
+                                            <td>
+                                                <a t-attf-href="/profile/#{ slug(applicant) }">
+                                                    <span t-att-style="(user and applicant.active) and 'font-weight: bold;' " t-field="applicant.web_name"/>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a t-attf-href="/profile/#{ slug(applicant) }">
+                                                    <span t-field="applicant.name"/>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <t t-if="applicant.years_of_experience">
+                                                    <span t-esc="applicant.years_of_experience"/>
+                                                    <span>years,</span>
+                                                    <span t-esc="applicant.mounts_of_experience"/>
+                                                    <span>months</span>
+                                                </t>
+                                            </td>
+                                            <td><span t-esc="len(applicant.experience_ids)" t-if="applicant.experience_ids"/></td>
+                                            <td>
+                                                <t t-set="limit" t-value="5"/>
+                                                <t t-foreach="applicant.categ_ids" t-as="categ">
+                                                    <t t-if="limit > 0">
+                                                        <t t-if="limit != 5"><span>, </span></t>
+                                                        <a t-attf-href="/profiles?technology=#{categ.name}">
+                                                            <span t-field="categ.name"/>
+                                                        </a>
+                                                    </t>
+                                                    <t t-set="limit" t-value="limit - 1"/>
+                                                    <t t-if="limit == -1" >
+                                                        <a t-attf-href="/profile/#{ slug(applicant) }">
+                                                           Show more
+                                                        </a>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                            <td><span t-field="applicant.write_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/></td>
+                                            <td style="text-align: center">
+<!--                                                <t t-if="flag[applicant.partner_name] !=0">-->
+<!--                                                    <span> <image t-attf-src="{{flag[applicant.partner_name]}}" style="width: 3rem; height: 3rem;"/> </span>-->
+<!--                                                </t>-->
+<!--                                                <t t-else="">-->
+                                                    <span t-esc="applicant.partner_id.country_id.name"/>
+<!--                                                </t>-->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section class="s_title pb32 o_colored_level pt0" data-vcss="001" data-snippet="s_title" data-name="Title">
+                        <div class="container s_allow_columns">
+                            <h1 style="text-align: center;">
+                                <font style="font-size: 62px;">
+                                    <a href="/contactus" class="btn btn-lg btn-primary" data-original-title="" title="" aria-describedby="tooltip819174">Contact a <b>Hiring Advisor</b></a>
+                                </font>
+                            </h1>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,205 @@
+
+<odoo>
+
+<template id="anonymousCV">
+
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+            <div class="header text-center" style="margin-top:0px !important;">
+                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 120px;"/>
+            </div>
+
+            <div class="page" style="font-family: 'Montserrat';">
+
+
+                <!--<link rel="stylesheet" href="/applicant_tracking_system/static/src/css/web_page.css"/>-->
+                <!--<link rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css"/>-->
+
+                <style type="text/css">
+
+                    *{
+                        font-family: 'Roboto', sans-serif !important;
+                    }
+                    .title {
+                    color:grey;
+                    font-weight: bold;
+
+                    }
+                    hr {
+                    margin-top: 0px;
+                    margin-bottom: 0px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    border-top: 4px solid #000000;
+                    }
+
+                    .wrapper {
+                        width: 100%;
+                        border: 0px solid black;
+                        overflow: hidden; /* will contain if #first is longer than #second */
+                    }
+                    .first {
+
+                        float:left; /* add this */
+                        border: 0px solid red;
+                    }
+                    .second {
+                        border: 0px solid green;
+                        overflow: hidden; /* if you don't want #second to wrap below #first */
+                    }
+                    .first_lang {
+                        margin: 3px;
+                        display: inline-block;
+                        border: 0px solid red;
+                    }
+                    .second_lang {
+                        margin: 3px;
+                        border: 0px solid green;
+                        display: inline-block;
+                    }
+                    .align_right {
+                        text-align: right;
+                    }
+                    .small_font {
+                        font-family: 'Times New Roman';
+                        font-size: 12px;
+                    }
+
+
+
+                </style>
+
+
+                <t t-set="data" t-value="o.json_data()"/>
+
+
+        <div class="row mt32 mb32">
+<!--Main Info-->
+            <div class="col-xs-4">
+                <div class="wrapper" style="font-family: 'Montserrat'; font-weight: bold;">
+
+                    <div class="first">
+                        <!--<h1>Anonymous</h1>-->
+                        <h1><b><t t-esc="data['name']"/></b></h1>
+                        <h4 style="color:#2685a5;white-space: pre-line;"><t t-esc="data['title_name']"/></h4><br/>
+                    </div>
+                </div>
+            </div>
+
+
+
+<!--Project Experience-->
+            <div class="col-xs-8">
+                <hr/>
+
+                 <div class="wrapper" style="font-family: 'Montserrat';                                    font-weight: 500;">
+                     <xpath expr="." position="inside">
+                            <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet"/>
+                     </xpath>
+                     <div t-if="data['description']">
+                         <h3><b>Professional Profile:</b></h3>
+                         <div style="white-space: pre-line">
+                            <t t-esc="data['description']"/>
+                             </div>
+                        </div>
+
+                     <h3><b>Project experience: </b></h3>
+
+                    <t t-foreach="data['experience']" t-as="experience">
+
+                            <h5 style="margin-bottom:0;">
+                                <b><t t-esc="experience['title']"/> @ <t t-esc="experience['company']"/><br/></b>
+                            </h5>
+
+                            <div style="margin-bottom: 5px; font-size: 14px; color: gray;">
+                                <t t-esc="experience['start_date']"/> - <t t-esc="experience['end_date']"/> <t t-if="not experience['end_date']">Present</t> <br/>
+                                Location: <t t-esc="experience['location']"/>
+                            </div>
+                            <div style="white-space: pre-line">
+                            <t t-esc="experience['projects']"/>
+                            </div>
+                    </t>
+
+                </div>
+
+
+<!--Education-->
+                <div class="wrapper">
+                    <br/>
+                    <h3><b>Education: </b></h3>
+
+                    <t t-foreach="data['education']" t-as="education">
+
+                        <t t-if="education['type']=='university'">
+
+                            <b>University '<t t-esc="education['university']"/>' - Faculty of <t t-esc="education['faculty']"/></b><br/>
+                            <t t-esc="education['degree']"/> degree <br/>
+                            <div style="margin-bottom: 5px; font-size: 14px; color: gray;">
+                                <t t-esc="education['from_date']"/> - <t t-esc="education['to_date']"/> <t t-if="not education['to_date']">Present</t><br/>
+                            </div>
+                        </t>
+
+                        <t t-if="education['type']=='high_school'">
+                            <div style="margin-top:20px;">
+
+                                <b>High School '<t t-esc="education['school']"/>'</b> <br/>
+                                <t t-esc="education['field_of_study']"/><br/>
+                                <div style="margin-bottom: 5px; font-size: 14px; color: gray;">
+                                    <t t-esc="education['from_date']"/> - <t t-esc="education['to_date']"/> <t t-if="not education['to_date']">Present</t><br/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-if="education['type']=='course'">
+
+                            <b><t t-esc="education['field_of_study']"/> Course at '<t t-esc="education['school']"/>'</b><br/>
+                            <t t-esc="education['degree']"/>
+                            <div style="margin-bottom: 5px; font-size: 14px; color: gray;">
+                                <t t-esc="education['from_date']"/> - <t t-esc="education['to_date']"/> <t t-if="not education['to_date']">Present</t> <br/>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+
+
+
+<!--Accomplishments-->
+                <div class="wrapper">
+                    <br/>
+                    <h3><b>Accomplishments: </b></h3>
+
+                    <t t-if="data['certificates']">
+                        <h4 style="margin-bottom: 2px"><u>Certificates:</u></h4>
+                        <div style="white-space: pre-line;">
+                        <t t-esc="data['certificates']"/>
+                        </div>
+                    </t>
+
+                    <t t-if="data['key_skills']">
+                        <h4 style="margin-bottom: 2px"><u>Key skills:</u></h4>
+                        <div style="white-space: pre-line;"><t t-foreach="data['key_skills'].split(',')" t-as="skill">
+                            <t t-esc="skill"/>
+                        </t></div>
+                    </t>
+                    <br/>
+                    <h3 style="margin-bottom: 2px"><b>Languages:</b></h3>
+                    <t t-foreach="data['language']" t-as="language">
+                        <div class="first_lang">
+                            <h4><b><t t-esc="language['language']"/></b> <div style="font-size: 14px;"><t t-esc="language['proficiency']"/> </div> </h4>
+                        </div><br/>
+                    </t>
+                    <br/>
+
+                </div>
+            </div>
+
+
+            </div>
+            </div>
+        </t>
+
+    </t>
+
+
+</template>
+</odoo>

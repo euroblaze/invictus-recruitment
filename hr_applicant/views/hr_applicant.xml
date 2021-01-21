@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_applicant_active_button" model="ir.ui.view">
+        <field name="name">hr.applicant_active_button</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_applications_email']" position="before">
+                <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" groups="hr.group_hr_manager">
+                           <span attrs="{'invisible': [('active', '!=', False)]}">Activate</span>
+                           <span attrs="{'invisible': [('active', '=', False)]}">Deactivate</span>
+                       </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

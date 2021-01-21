@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--<data> -->
+        <record id="multiple_update_cvs" model="ir.actions.server">
+            <field name="name">Update information</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code">
+                if context.get('active_model') == 'hr.applicant':
+                ids = []
+                if(context['active_ids']):
+                ids = context['active_ids']
+                else:
+                ids = context['active_id']
+                action = env['hr.applicant'].multiple_update_cvs(ids)
+            </field>
+        </record>
+        <record id="multiple_update_cvs_action" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.applicant'" name="model"/>
+            <field name="name">Update information</field>
+            <field eval="'ir.actions.server,%d'%multiple_update_cvs" name="value"/>
+        </record>
+    <!--</data> -->
+</odoo>

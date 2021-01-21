@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_updateCV" model="mail.template">
+          <field name="name">CV update</field>
+          <field name="subject">Update your CV on Invictus</field>
+          <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+          <field name="auto_delete" eval="False"/>
+          <field name="report_template" ref="applicantCV_template"/>
+          <field name="report_name">Your CV</field>
+          <field name="email_to">${object.email_from}</field>
+	  <field name="body_html">
+<![CDATA[
+            Dear ${object.partner_name},
+            Update your information at Invictus-solutions.
+            Follow this <a href="${object.get_url()}">link</a>.
+	    ]]>
+	  </field>
+       </record>
+    </data>
+</odoo>

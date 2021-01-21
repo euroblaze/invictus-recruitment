@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="sale_customers" model="ir.ui.view">
+        <field name="name">sale_customers</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="candidates" string="Candidates">
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

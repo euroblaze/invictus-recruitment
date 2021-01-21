@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="automation_settings" model="ir.ui.view">
+            <field name="name">Automation Settings Form</field>
+            <field name="model">hr.recruitment.automation.settings</field>
+            <field name="arch" type="xml">
+                <form string="Report Configuration" create="false" delete="false">
+                    Update interval: <field name="interval"/> months
+                </form>
+            </field>
+        </record>
+
+        <record id="CVupdate_configuration" model="ir.actions.act_window">
+            <field name="name">Automation Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.recruitment.automation.settings</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">form</field>
+            <field name="res_id">1</field>
+            <field name="view_id" ref="automation_settings"/>
+        </record>
+
+        <menuitem
+                action="CVupdate_configuration"
+                id="applicant_tracking_system.CVupdate_configuration_id"
+                parent="hr_recruitment.menu_hr_recruitment_configuration"
+                sequence="30"/>
+
+    </data>
+    <!--
+    <data noupdate="1">
+        <function
+                id="function_without_params"
+                model="hr.recruitment.automation.settings"
+                name="create_default"/>
+    </data>
+    -->
+</odoo>

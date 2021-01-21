@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="portal.portal_docs_entry" name="My Portal Docs Entry">
+        <a t-att-href="url" t-att-title="title" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" t-if="simplify_count">
+
+            <t t-esc="title"/>
+            <t t-if='count'>
+                <span class="badge badge-secondary badge-pill" t-esc="count"/>
+            </t>
+            <t t-elif="placeholder_count">
+                <span class="badge badge-secondary badge-pill" t-att-data-placeholder_count="placeholder_count">
+                    <i class="fa fa-spin fa-spinner"></i>
+                </span>
+            </t>
+        </a>
+    </template>
+    <template id="portal_my_home" name="Show Applicants" customize_show="True" inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Downloaded CVs</t>
+                <t t-set="url" t-value="'/my/downloaded_cvs'"/>
+                <t t-set="simplify_count" t-value="1"/>
+                <t t-set="placeholder_count" t-value="'cv_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Scheduled Applicants</t>
+                <t t-set="url" t-value="'/my/schedule_applicants'"/>
+                <t t-set="simplify_count" t-value="1"/>
+                <t t-set="placeholder_count" t-value="'scheduled_count'"/>
+            </t>
+
+        </xpath>
+    </template>
+</odoo>

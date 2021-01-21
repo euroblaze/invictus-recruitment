@@ -1,0 +1,43 @@
+.parent{
+  position: absolute;
+  width: 68%;
+  height: 65%;
+  overflow: scroll;
+}
+.right {
+    position: absolute;
+    right: 330px;
+    top: 150px;
+    width: 300px;
+}
+.left {
+    position: absolute;
+    left: 0px;
+    top: 150px;
+    width: 300px;
+}
+.center {
+    position: absolute;
+    left: 300px;
+    right: 300px;
+    top: 150px;
+    width: 300px;
+}
+.right_exp {
+    position: absolute;
+    right: 10px;
+}
+.left_exp {
+    position: absolute;
+    left: 0px;
+}
+.center_exp {
+    position: absolute;
+    left: 430px;
+    right: 470px;
+}
+.update_button{
+    position: absolute;
+    right:    50%;
+    top:   50px;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="send_update_mail" model="ir.ui.view">
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="send_update_mail" string="Update information" type="object" class="oe_highlight"/>
+                        <button name="send_recomend_mail" string="Suggest applicant" type="object" class="oe_highlight" />
+                        <button name="report_button" type="object" string="Preview Report" class="oe_highlight"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="suggest_view">
+            <field name="name">suggest_view</field>
+            <field name="model">mail.compose.message</field>
+            <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+            <field name="mode">primary</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='body']" position="after"/>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="detail" name="Profile">
+        <t t-name="website.profile">
+            <t t-call="website.layout">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="/hr_applicant/static/src/js/notify.min.js"></script>
+                <div id="wrap" class="oe_structure oe_empty">
+                <section class="s_title pt32 pb32 o_colored_level" data-vcss="001" data-snippet="s_title" data-name="Title">
+                    <div class="container s_allow_columns">
+                        <h1 style="text-align: center;">
+                            <font style="font-size: 62px;">
+                                <span t-esc="applicant.web_name"/>.
+                                <t t-if="applicant.years_of_experience">
+                                    <span t-esc="applicant.years_of_experience"/>
+                                    <span>years,</span>
+                                    <span t-esc="applicant.mounts_of_experience"/>
+                                    <span>months</span>
+                                </t>
+                            </font>
+                        </h1>
+                        <t t-if="request.session.uid">
+                            <a t-if="is_internal_user" t-attf-href="/#{ slug(applicant) }" target="_blank" style='text-decoration: none; float: left' class="o_default_snippet_text" type="object" name="open_applicant">Update profile</a>
+                            <br/>
+                             <button data-update="all_sections" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button">Request an update</button>
+
+                        </t>
+                        <a style="float: right" class="btn btn-primary"  href="/profiles" role="button">Back to search</a>
+
+                    </div>
+                </section>
+                <div style="clear: both"></div>
+                <br/>
+                <section class="s_text_block o_colored_level pt0 pb0" data-snippet="s_text_block" data-name="Text">
+                    <div class="container s_allow_columns">
+
+                        <a t-if='next_applicant' t-attf-href="/profile/#{ slug(next_applicant) }" class="btn btn-primary btnNext next round" style="float: right; color: white; ">Next &#8250;</a>
+                        <a t-if='previous_applicant' t-attf-href="/profile/#{ slug(previous_applicant) }" class="btn btn-primary btnPrevious previous round" style="float: right; color: white; margin-right: 10px">&#8249; Previous</a>
+                        <t t-if="nav_filter"><span style="clear: both; float: right;">Navigate filter: <b><i><span t-esc="nav_filter" /></i></b></span></t>
+                        <div class="row">
+                            <div class="col-3">
+                                <h2>Summary</h2>
+                                <p><span style="font-size: 1rem;" t-field="applicant.description"/></p>
+                            </div>
+                            <div class="col-9 text-left">
+                                <button  data-update="summary" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button">Request an update</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_title pt32 o_colored_level pb0" data-vcss="001" data-snippet="s_title" data-name="Title">
+                    <div class="container s_allow_columns">
+                        <div class="row">
+                            <div class="col-3">
+                                <h2>Projects</h2>
+                            </div>
+                            <div class="col-9 text-left">
+                                <!--                            <a t-if="not is_internal_user" t-attf-href="?update=project" style='text-decoration: none; line-height: 2;' class="o_default_snippet_text" type="object" name="open_applicant">Request an update</a>-->
+                                <button data-update="project" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button" >Request an update</button>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </section>
+                <section class="s_faq_collapse o_colored_level pt0 pb0" data-snippet="s_faq_collapse" data-name="Accordion">
+                    <div class="container">
+                        <div id="myCollapse" class="accordion" role="tablist" t-foreach="applicant.experience_ids" t-as="exp">
+                            <div class="card bg-white" data-name="Item">
+                                <a href="#" role="tab" data-toggle="collapse" aria-expanded="false" class="card-header collapsed" data-parent="#myCollapse" t-attf-data-target="#mycolapse{{exp.id}}" aria-describedby="tooltip226120">
+                                    <span t-field="exp.title"/>
+                                    <t t-if="exp.start_date">
+                                        - <span t-field="exp.start_date"/> -
+                                    </t>
+                                    <t t-if="exp.end_date">
+                                        <span t-field="exp.end_date"/>
+                                    </t>
+                                    <t t-if="exp.location">
+                                        <span>//</span>
+                                        <span t-field="exp.location"/>
+
+                                    </t></a>
+                                <div class="collapse" role="tabpanel" t-attf-id="mycolapse{{exp.id}}" style="">
+                                    <div class="card-body">
+                                        <p class="card-text"><span t-field="exp.projects"/></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <section class="s_title pt32 o_colored_level pb0" data-vcss="001" data-snippet="s_title" data-name="Title">
+                    <div class="s_allow_columns container">
+                        <div class="row">
+                            <div class="col-3">
+                                <h2>Education</h2>
+                            </div>
+                            <div class="col-9 text-left">
+                                <button data-update="education" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button" >Request an update</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_faq_collapse pb32 o_colored_level pt0" data-snippet="s_faq_collapse" data-name="Accordion">
+                    <div class="container" t-foreach="applicant.education" t-as="edu">
+                        <div id="myCollapse" class="accordion" role="tablist">
+                            <div class="card bg-white" data-name="Item">
+                                <a href="#" role="tab" data-toggle="collapse" aria-expanded="false" class="card-header collapsed" data-parent="#myCollapse" t-attf-data-target="#myCollapse{{edu.id}}" data-original-title="" title="" aria-describedby="tooltip280637">
+                                    <span t-field="edu.type"/>
+                                </a>
+                                <div class="collapse" role="tabpanel" t-attf-id="myCollapse{{edu.id}}" style="">
+                                    <div class="card-body">
+                                        <span t-field="edu.type"/>
+                                        <span t-field="edu.university"/> -
+                                        <span t-field="edu.faculty"/>
+                                        <br/>
+                                        <span t-field="edu.degree"/>,
+                                        <span t-field="edu.field_of_study"/>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_title pt32 o_colored_level pb0" data-vcss="001" data-snippet="s_title" data-name="Title" style="">
+                    <div class="s_allow_columns container">
+                        <div class="row">
+                            <div class="col-3">
+                                <h2>Technical Skills</h2>
+                            </div>
+                            <div class="col-9 text-left">
+                               <button data-update="technical" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button" >Request an update</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_text_block pt32 pb32 o_colored_level" data-snippet="s_text_block" data-name="Text">
+                    <div class="s_allow_columns container">
+                        <div class="row">
+                            <div class="o_colored_level col-lg-3" t-foreach="key" t-as="k">
+                                <ul>
+                                    <li>
+                                        <p><span t-esc="k"/></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_title pt32 o_colored_level pb0" data-vcss="001" data-snippet="s_title" data-name="Title" style="">
+                    <div id="certificates" class="s_allow_columns container">
+                        <div class="row">
+                            <div class="col-3">
+                                <h2>Certificates</h2>
+                            </div>
+                            <div class="col-9 text-left">
+                                <button data-update="certificates" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button" >Request an update</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_text_block pt32 pb32 o_colored_level" data-snippet="s_text_block" data-name="Text">
+                    <div class="container s_allow_columns">
+                        <p><span t-field="applicant.certificates"/></p>
+                    </div>
+                </section>
+                <section class="s_title pt32 o_colored_level pb0" data-vcss="001" data-snippet="s_title" data-name="Title" style="">
+                    <div class="s_allow_columns container">
+                        <div class="row">
+                            <div class="col-3">
+
+                                <h2>Languages</h2>
+                            </div>
+                            <div class="col-9 text-left">
+                                <button data-update="languages" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button">Request an update</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+                <section class="s_text_block pt32 pb32 o_colored_level" data-snippet="s_text_block" data-name="Text" style="">
+                    <div class="s_allow_columns container" t-foreach="applicant.languages" t-as="skill">
+                        <p>
+                            <span t-field="skill.language"/>
+                            <span t-field="skill.proficiency"/>
+                        </p>
+                    </div>
+                </section>
+                <section class="s_text_block o_colored_level pt0 pb0" data-snippet="s_text_block" data-name="Text">
+                    <div class="s_allow_columns container">
+                        <div class="row justify-content-center mb-3">
+                            <div class="o_colored_level">
+                                <a t-attf-href="/calendar/#{ slug(applicant) }/schedule-a-demo-1/appointment" class="btn btn-primary btn-lg mb-3 mr-2" role="button">Schedule an interview</a>
+                                <a t-attf-href="/mail/#{ slug(applicant) }" class="btn btn-primary btn-lg mb-3 mr-2" role="button">Send Profile by PDF</a>
+                                <a t-attf-href="https://invictus.careers/profiles" class="btn btn-primary btn-lg mb-3 mr-2" role="button">Search more</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog" >
+                            <div class="modal-content" style="border-radius:50px">
+                                <div class="modal-header" >
+
+                                        <img class="img-responsive" style="margin:0 auto;" src="/hr_applicant/static/src/logo.png" alt="" width="400" height="150"/>
+
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" action="?update" method="GET">
+                                        <div class="form-group">
+                                            <p><center><b>Request an update for the CV from the developer</b></center></p>
+                                            <p style="margin: 0px; padding: 0px; font-size: 13px;"><center>
+                                                Which section of <b><span t-esc="applicant.partner_name"/></b> profile would you like an update for?
+                                            </center>
+                                            </p>
+                                            <label for="section"></label>
+                                            <center><select name="section" id="section" style="width: 50%;">
+                                                <option value="summary">Summary</option>
+                                                <option value="project">Projects</option>
+                                                <option value="education">Education</option>
+                                                <option value="technical">Technical Skills</option>
+                                                <option value="certificates">Certificates</option>
+                                                <option value="languages">Languages</option>
+                                                <option value="all_sections">ALL SECTIONS</option>
+
+                                            </select>
+                                            </center>
+                                            <label for=""></label>
+                                            <p style="margin: 0px; padding: 0px; font-size: 13px;"><center>
+                                                Any specific comments you'd like to pass on to our recruitment manager?
+                                            </center></p>
+                                            <textarea class="form-control" t-att-placeholder="'Dear '+ applicant.partner_name +', I am interested in your profile which I received from INVICTUS solutions.'"></textarea>
+
+
+                                            <br></br>
+                                            <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                                               You will receive an e-mail response when the developer updates his CV.In the meantime, feel free to download his profile as a PDF,
+                                                or browse more profiles.
+                                            </p>
+                                        <div class="modal-footer">
+                                            <button type="submit"  class="btn btn-outline-info btn-default pull-right">Submit a request</button>
+                                        </div>
+
+
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <script type="text/javascript" t-if="status">
+                    $.notify("Update Request has been sent", "success");
+                </script>
+                <script>
+                    $(document).ready(function(){
+                    $(".modal-btn").click(function(){
+                    $("#myModal").modal();
+                    $("#section").val($(this).data("update"))
+
+
+                    });
+                    });
+
+                </script>
+
+
+            </t>
+        </t>
+    </template>
+</odoo>
