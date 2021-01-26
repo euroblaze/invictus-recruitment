@@ -159,8 +159,6 @@ class ApplicantTrackingSystem(models.Model):
         else:
             surname = stripped[1]
         surname_first = surname[:1]
-        number = self.id
-        "{0:06}".format(number)
         r_data["name"] = name + ' ' + surname_first
 
         experiences = self.env["hr.applicant.experience"].search([("applicant_id", "=", self.id)])
