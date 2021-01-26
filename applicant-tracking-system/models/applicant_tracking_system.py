@@ -4,6 +4,7 @@ import json
 import logging
 import datetime
 import psycopg2
+
 _logger = logging.getLogger(__name__)
 
 
@@ -29,7 +30,7 @@ def get_all_languages_tuples():
         list_of_languages_tuples.append(lang_tuple)
 
     list_of_languages_tuples.sort()
-    
+
     return list_of_languages_tuples
 
 
@@ -92,12 +93,11 @@ class ApplicantTrackingSystem(models.Model):
 
     @api.model
     def _get_default_name_anonymous(self):
-        number = 0
+
         helper = str(self.partner_name)
         print(self)
         stripped = helper.split()
-        for i in stripped:
-            number = number + 1
+        number = len(stripped)
         name = stripped[0]
         if number == 1:
             surname = str(" ")
@@ -111,19 +111,16 @@ class ApplicantTrackingSystem(models.Model):
 
     @api.model
     def _get_default_name_applicant(self):
-        number = 0
+
         helper = str(self.partner_name)
         print(self)
         stripped = helper.split()
-        for i in stripped:
-            number = number + 1
+        number = len(stripped)
         name = stripped[0]
-        # name="k"
         if number == 1:
             surname = str(" ")
         else:
             surname = stripped[1]
-        # surname = "v"
         pdf_name_string = name + "-" + surname
         self.pdf_name_applicant = pdf_name_string
 
@@ -152,11 +149,10 @@ class ApplicantTrackingSystem(models.Model):
         date_time_obj = self.write_date
         r_data["date_update"] = date_time_obj.date()
 
-        number = 0
         helper = str(self.partner_name)
         stripped = helper.split()
-        for i in stripped:
-            number = number+1
+        number = len(stripped)
+
         name = stripped[0]
         if number == 1:
             surname = str(" ")
@@ -164,7 +160,7 @@ class ApplicantTrackingSystem(models.Model):
             surname = stripped[1]
         surname_first = surname[:1]
         number = self.id
-        number_six = "{0:06}".format(number)
+        "{0:06}".format(number)
         r_data["name"] = name + ' ' + surname_first
 
         experiences = self.env["hr.applicant.experience"].search([("applicant_id", "=", self.id)])
@@ -204,7 +200,7 @@ class ApplicantTrackingSystem(models.Model):
 
     def get_url(self):
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
-        url = base_url+"/updateCV/"+self.encode(self.id)
+        url = base_url + "/updateCV/" + self.encode(self.id)
         return url
 
     def send_update_mail(self):
@@ -273,11 +269,6 @@ class ApplicantExperience(models.Model):
     def change_end_date(self):
         if self.project_in_work:
             self.end_date = False
-
-
-# class SuggestWizard(models.TransientModel):
-#    _name = 'suggest.wizard'
-#    _inherit = 'mail.compose.message'
 
 
 class AutomationSettings(models.Model):

@@ -56,7 +56,6 @@
                                 <h2>Projects</h2>
                             </div>
                             <div class="col-9 text-left">
-                                <!--                            <a t-if="not is_internal_user" t-attf-href="?update=project" style='text-decoration: none; line-height: 2;' class="o_default_snippet_text" type="object" name="open_applicant">Request an update</a>-->
                                 <button data-update="project" t-if="not is_internal_user" style='text-decoration: none; line-height: 2;' class="btn default modal-btn" type="button" >Request an update</button>
 
                             </div>

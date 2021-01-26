@@ -14,7 +14,6 @@ class UpdateCV(http.Controller):
         flag = 0
         pos = 1
         y = 0
-        err = {'employee_name': "Your application has been deleted"}
         for letter in letters:
             if flag == 0:
                 try:
@@ -54,12 +53,8 @@ class UpdateCV(http.Controller):
     @http.route('/updateCV/<id>', type='http', auth="public", website=True, methods=['POST'])
     def update_applicant(self, **kw):
         data = kw
-
         id_decode = self.decode(data['id'])
         applicant = http.request.env['hr.applicant'].sudo().search([('id', '=', int(id_decode))])
-
-        # return http.request.render('applicant_tracking_system.thank_page', {'partner_name': data['partner_name']})
-
         applicant.write({'update_cv_date': datetime.datetime.now()})
 
         if data['action'] == "update_contact":
@@ -76,15 +71,15 @@ class UpdateCV(http.Controller):
                 [("applicant_id", "=", applicant.id)])
 
             for education in applicant_educations:
-                id = str(education.id)
+                education_id = str(education.id)
 
-                education_vals = {'university': data['university' + '-' + id],
-                                  'faculty': data['faculty' + '-' + id],
-                                  'school': data['school' + '-' + id],
-                                  'degree': data['degree' + '-' + id],
-                                  'field_of_study': data['field_of_study' + '-' + id],
-                                  'from_date': data['from_date' + '-' + id],
-                                  'to_date': data['to_date' + '-' + id],
+                education_vals = {'university': data['university' + '-' + education_id],
+                                  'faculty': data['faculty' + '-' + education_id],
+                                  'school': data['school' + '-' + education_id],
+                                  'degree': data['degree' + '-' + education_id],
+                                  'field_of_study': data['field_of_study' + '-' + education_id],
+                                  'from_date': data['from_date' + '-' + education_id],
+                                  'to_date': data['to_date' + '-' + education_id],
                                   }
                 education.write(education_vals)
 
@@ -94,14 +89,14 @@ class UpdateCV(http.Controller):
                 [("applicant_id", "=", applicant.id)])
 
             for experience in applicant_experience:
-                id = str(experience.id)
+                experience_id = str(experience.id)
 
-                experience_vals = {'title': data['title' + '-' + id],
-                                   'start_date': data['start_date' + '-' + id],
-                                   'end_date': data['end_date' + '-' + id],
-                                   'company': data['company' + '-' + id],
-                                   'location': data['location' + '-' + id],
-                                   'projects': data['projects' + '-' + id]
+                experience_vals = {'title': data['title' + '-' + experience_id],
+                                   'start_date': data['start_date' + '-' + experience_id],
+                                   'end_date': data['end_date' + '-' + experience_id],
+                                   'company': data['company' + '-' + experience_id],
+                                   'location': data['location' + '-' + experience_id],
+                                   'projects': data['projects' + '-' + experience_id]
                                    }
 
                 experience.write(experience_vals)

@@ -15,7 +15,6 @@
             <field name="name">Automation Settings</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.recruitment.automation.settings</field>
-            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">form</field>
             <field name="res_id">1</field>
             <field name="view_id" ref="automation_settings"/>
@@ -28,12 +27,4 @@
                 sequence="30"/>
 
     </data>
-    <!--
-    <data noupdate="1">
-        <function
-                id="function_without_params"
-                model="hr.recruitment.automation.settings"
-                name="create_default"/>
-    </data>
-    -->
 </odoo>

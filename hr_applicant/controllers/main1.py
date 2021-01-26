@@ -63,42 +63,20 @@ class WebsiteHrRecruitment(http.Controller):
                 .sorted(lambda r: r.years_of_experience, reverse=True)
             count = request.env['hr.applicant'].sudo().search_count([])
             placeholder = f"Search {count} number of profiles"
-        # flag_link = {}
-        # links = {}
-        # unique_countries = set(request.env['hr.applicant'].sudo().search([]).partner_id.country_id)
-        # for unique in unique_countries:
-        #     tag = unique.name
-        #     if 'Macedonia' in str(tag):
-        #         tag = 'macedonia'
-        #     req = requests.get(f'https://restcountries.eu/rest/v2/name/{tag}')
-        #     if req.status_code == 200:
-        #         links[unique.name] = req.json()[0]['flag']
         for applicant in search_applicants:
-            if isinstance(applicant.partner_name, str):
-                if applicant.partner_name.split(" ")[0] in applicant.name:
-                    position = applicant.name.find(applicant.partner_name.split(" ")[0])
-                    applicant.name = applicant.name[:position]
-            # if applicant.partner_id.country_id.name in links.keys():
-            #     flag_link[applicant.partner_name] = links[applicant.partner_id.country_id.name]
-            # else:
-            #     flag_link[applicant.partner_name] = 0
+            if isinstance(applicant.partner_name, str) and applicant.partner_name.split(" ")[0] in applicant.name:
+                position = applicant.name.find(applicant.partner_name.split(" ")[0])
+                applicant.name = applicant.name[:position]
         applicants = search_applicants
         return request.render('hr_applicant.profiles', {
             'applicants': applicants,
             'number': number_of_results,
             'placeholder_value': placeholder,
             'user': user,
-            # 'flag': flag_link
         })
 
     @http.route('''/profile/<model("hr.applicant"):applicant>''', type='http', auth="public", website=True)
     def profile_detail(self, applicant, **kw):
-        # current_user = request.env.user.id
-        # public_user = request.env.ref('base.public_user').id
-        # if request.env.user.id != request.env.ref('base.public_user').id:
-        #     _logger.info('DOBAR')
-        # _logger.info(current_user)
-        # _logger.info(public_user)
         uid = http.request.env.context.get('uid')
         user = http.request.env['res.users'].sudo().browse(uid)
         status = False
@@ -106,12 +84,18 @@ class WebsiteHrRecruitment(http.Controller):
             rcs = request.env['requested.changes'].sudo().search(
                 [('recruiter', '=', user.id), ('applicant', '=', applicant.id)])
             messages = {
-                'summary': 'Please update your Summary,check it <a href="' + applicant.sudo().get_url() + '?update= summary'+ kw['section']+'#'+kw['section'] +'">here</a>',
-                'project': 'Please update your Projects,check it <a href="' + applicant.sudo().get_url() + '?update= project'+ kw['section']+ '#'+kw['section'] +'">here</a>',
-                'education': 'Please update your Education,check it <a href="' + applicant.sudo().get_url() + '?update= education'+ kw['section']+ '#'+kw['section'] +'">here</a>',
-                'technical': 'Please update your Technical Skills,check it <a href="'+ applicant.sudo().get_url() + '?update= technical' + kw['section']+ '#'+kw['section'] +'">here</a>',
-                'certificates': 'Please update your Certificates,check it <a href="' + applicant.sudo().get_url() + '?update= certificates' + kw['section']+ '#'+kw['section'] +'">here</a>',
-                'all_sections': 'Please update your CV,check it <a href="' + applicant.sudo().get_url() + '?update= all_sections'+ kw['section'] + '#'+kw['section'] +'">here</a>',
+                'summary': 'Please update your Summary,check it <a href="' + applicant.sudo().get_url() + '?update= summary' +
+                           kw['section'] + '#' + kw['section'] + '">here</a>',
+                'project': 'Please update your Projects,check it <a href="' + applicant.sudo().get_url() + '?update= project' +
+                           kw['section'] + '#' + kw['section'] + '">here</a>',
+                'education': 'Please update your Education,check it <a href="' + applicant.sudo().get_url() + '?update= education' +
+                             kw['section'] + '#' + kw['section'] + '">here</a>',
+                'technical': 'Please update your Technical Skills,check it <a href="' + applicant.sudo().get_url() + '?update= technical' +
+                             kw['section'] + '#' + kw['section'] + '">here</a>',
+                'certificates': 'Please update your Certificates,check it <a href="' + applicant.sudo().get_url() + '?update= certificates' +
+                                kw['section'] + '#' + kw['section'] + '">here</a>',
+                'all_sections': 'Please update your CV,check it <a href="' + applicant.sudo().get_url() + '?update= all_sections' +
+                                kw['section'] + '#' + kw['section'] + '">here</a>',
 
             }
 
@@ -199,7 +183,7 @@ class WebsiteHrRecruitment(http.Controller):
                     'phone': kwargs['phone_number'],
                     'partner_name': kwargs['company_name'],
                 }
-                crm_id = request.env['crm.lead'].sudo().create(crm_lead)
+                request.env['crm.lead'].sudo().create(crm_lead)
             return request.render("hr_applicant.detail", {
                 'applicant': applicant,
             })
@@ -243,16 +227,16 @@ class WebsiteHrRecruitment(http.Controller):
 
     @http.route(['/calendar/get_appointment_info'], type='json', auth="public", methods=['POST'], website=True)
     def get_appointment_info(self, appointment_id, prev_emp=False, **kwargs):
-        Appt = request.env['calendar.appointment.type'].sudo().browse(int(appointment_id)).sudo()
+        appt = request.env['calendar.appointment.type'].sudo().browse(int(appointment_id)).sudo()
         result = {
-            'message_intro': Appt.message_intro,
-            'assignation_method': Appt.assignation_method,
+            'message_intro': appt.message_intro,
+            'assignation_method': appt.assignation_method,
         }
         if result['assignation_method'] == 'chosen':
             selection_template = request.env.ref('website_calendar.employee_select')
             result['employee_selection_html'] = selection_template._render({
-                'appointment_type': Appt,
-                'suggested_employees': Appt.employee_ids.name_get(),
+                'appointment_type': appt,
+                'suggested_employees': appt.employee_ids.name_get(),
                 'selected_employee_id': prev_emp and int(prev_emp),
             })
         return result
@@ -267,14 +251,14 @@ class WebsiteHrRecruitment(http.Controller):
             admin = request.env['hr.employee'].sudo().browse(int(1))[0]
             admin.applicant_id = applicant
         request.session['timezone'] = timezone or appointment_type.appointment_tz
-        Employee = request.env['hr.employee'].sudo().browse(int(employee_id)) if employee_id else None
+        employee = request.env['hr.employee'].sudo().browse(int(employee_id)) if employee_id else None
         appointment_type.max_schedule_days = 45
-        Slots = appointment_type.sudo()._get_appointment_slots(request.session['timezone'], Employee)
+        slots = appointment_type.sudo()._get_appointment_slots(request.session['timezone'], employee)
         return request.render("hr_applicant.appointment_applicant", {
             'appointment_type': appointment_type,
             'timezone': request.session['timezone'],
             'failed': failed,
-            'slots': Slots,
+            'slots': slots,
         })
 
     @http.route(['/hr_calendar/<model("calendar.appointment.type"):appointment_type>/info'], type='http', auth="public",
@@ -299,7 +283,6 @@ class WebsiteHrRecruitment(http.Controller):
             'datetime_locale': day_name + ' ' + date_formated,
             'datetime_str': date_time,
             'employee_id': employee_id,
-            # 'countries': request.env['res.country'].search([]),
 
         })
 
@@ -333,24 +316,24 @@ class WebsiteHrRecruitment(http.Controller):
         date_end = date_start + relativedelta(hours=appointment_type.appointment_duration)
 
         # check availability of the employee again (in case someone else booked while the client was entering the form)
-        Employee = request.env['hr.employee'].sudo().browse(int(employee_id))
-        print(Employee.applicant_id.id)
-        if Employee.user_id and Employee.user_id.partner_id:
-            if not Employee.user_id.partner_id.calendar_verify_availability(date_start, date_end):
+        employee = request.env['hr.employee'].sudo().browse(int(employee_id))
+        print(employee.applicant_id.id)
+        if employee.user_id and employee.user_id.partner_id:
+            if not employee.user_id.partner_id.calendar_verify_availability(date_start, date_end):
                 return request.redirect('/calendar/%s/appointment?failed=employee' % appointment_type.id)
 
         country_id = int(country_id) if country_id else None
         country_name = country_id and request.env['res.country'].browse(country_id).name or ''
-        Partner = request.env['res.partner'].sudo().search([('email', '=like', email)], limit=1)
-        if Partner:
-            if not Partner.calendar_verify_availability(date_start, date_end):
+        partner = request.env['res.partner'].sudo().search([('email', '=like', email)], limit=1)
+        if partner:
+            if not partner.calendar_verify_availability(date_start, date_end):
                 return request.redirect('/calendar/%s/appointment?failed=partner' % appointment_type.id)
-            if not Partner.mobile or len(Partner.mobile) <= 5 and len(phone) > 5:
-                Partner.write({'mobile': phone})
-            if not Partner.country_id:
-                Partner.country_id = country_id
+            if not partner.mobile or len(partner.mobile) <= 5 and len(phone) > 5:
+                partner.write({'mobile': phone})
+            if not partner.country_id:
+                partner.country_id = country_id
         else:
-            Partner = Partner.create({
+            partner = partner.create({
                 'name': name,
                 'country_id': country_id,
                 'mobile': phone,
@@ -374,15 +357,10 @@ class WebsiteHrRecruitment(http.Controller):
 
         categ_id = request.env.ref('website_calendar.calendar_event_type_data_online_appointment')
         alarm_ids = appointment_type.reminder_ids and [(6, 0, appointment_type.reminder_ids.ids)] or []
-        partner_ids = list(set([Employee.user_id.partner_id.id] + [Partner.id]))
+        partner_ids = list(set([employee.user_id.partner_id.id] + [partner.id]))
         event = request.env['calendar.event'].sudo().create({
             'name': _('%s with %s') % (appointment_type.name, name),
             'start': date_start.strftime(dtf),
-            # FIXME master
-            # we override here start_date(time) value because they are not properly
-            # recomputed due to ugly overrides in event.calendar (reccurrencies suck!)
-            #     (fixing them in stable is a pita as it requires a good rewrite of the
-            #      calendar engine)
             'start_date': date_start.strftime(dtf),
             'stop': date_end.strftime(dtf),
             'allday': False,
@@ -393,16 +371,16 @@ class WebsiteHrRecruitment(http.Controller):
             'partner_ids': [(4, pid, False) for pid in partner_ids],
             'categ_ids': [(4, categ_id.id, False)],
             'appointment_type_id': appointment_type.id,
-            'user_id': Employee.user_id.id,
-            'applicant_id': Employee.applicant_id.id
+            'user_id': employee.user_id.id,
+            'applicant_id': employee.applicant_id.id
         })
         event.attendee_ids.write({'state': 'accepted'})
         crm_lead = {
-            'name': Partner.name,
-            'email_from': Partner.email,
-            'phone': Partner.mobile
+            'name': partner.name,
+            'email_from': partner.email,
+            'phone': partner.mobile
         }
-        crm_id = request.env['crm.lead'].sudo().create(crm_lead)
+        request.env['crm.lead'].sudo().create(crm_lead)
         return request.redirect('/calendar/view/' + event.access_token + '?message=new')
 
     @http.route(['/calendar/view/<string:access_token>'], type='http', auth="public", website=True)

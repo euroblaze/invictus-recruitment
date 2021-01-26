@@ -11,8 +11,6 @@
         'reports/applicantCV.xml', 'reports/report_template.xml', 'reports/anonymousCV.xml', 'mails/updateCV.xml',
         'mails/suggestCV.xml', 'mails/suggestCV_anonymous.xml', 'views/updateCV.xml', 'views/settings.xml',
         'security/ir.model.access.csv',
-        # 'data/automation.xml',
-        # 'views/actions.xml',
         'mails/updateCV_first_time.xml',
         ]
- }
+}

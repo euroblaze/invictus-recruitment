@@ -11,10 +11,6 @@
 
             <div class="page" style="font-family: 'Montserrat';">
 
-
-                <!--<link rel="stylesheet" href="/applicant_tracking_system/static/src/css/web_page.css"/>-->
-                <!--<link rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css"/>-->
-
                 <style type="text/css">
 
                     *{
@@ -79,7 +75,6 @@
                 <div class="wrapper" style="font-family: 'Montserrat'; font-weight: bold;">
 
                     <div class="first">
-                        <!--<h1>Anonymous</h1>-->
                         <h1><b><t t-esc="data['name']"/></b></h1>
                         <h4 style="color:#2685a5;white-space: pre-line;"><t t-esc="data['title_name']"/></h4><br/>
                     </div>

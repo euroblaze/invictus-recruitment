@@ -1,646 +1,656 @@
 <odoo>
     <template id="updateCV_page" name="Update your information">
-      <t t-call="website.layout">
-
-
-        <style>
-          body {font-family: Arial, Helvetica, sans-serif;}
-
-          /* The Modal (background) */
-          .modal {
-              display: none; /* Hidden by default */
-              position: fixed; /* Stay in place */
-              z-index: 1; /* Sit on top */
-              padding-top: 100px; /* Location of the box */
-              left: 0;
-              top: 0;
-              width: 100%; /* Full width */
-              height: 100%; /* Full height */
-              overflow: auto; /* Enable scroll if needed */
-              background-color: rgb(0,0,0); /* Fallback color */
-              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-          }
-
-          /* Modal Content */
-          .modal-content {
-              background-color: #fefefe;
-              margin: auto;
-              padding: 20px;
-              border: 1px solid #888;
-              width: 60%;
-          }
-
-          .modal-content_lang {
-              background-color: #fefefe;
-              margin: auto;
-              padding: 20px;
-              border: 1px solid #888;
-              width: 350px;
-          }
-
-          .modal-content_exp {
-              background-color: #fefefe;
-              margin: auto;
-              padding: 20px;
-              border: 1px solid #888;
-              width: 60%;
-          }
-
-
-
-          /* The Close Button */
-          .close {
-              color: #aaaaaa;
-              float: right;
-              font-size: 28px;
-              font-weight: bold;
-          }
-
-            .close_lang {
-              color: #aaaaaa;
-              float: right;
-              font-size: 28px;
-              font-weight: bold;
-          }
-          .close_exp {
-              color: #aaaaaa;
-              float: right;
-              font-size: 28px;
-              font-weight: bold;
-          }
-
-          .close:hover,
-          .close:focus {
-              color: #000;
-              text-decoration: none;
-              cursor: pointer;
-          }
-
-          .close_lang:hover,
-          .close_lang:focus {
-              color: #000;
-              text-decoration: none;
-              cursor: pointer;
-          }
-          .close_exp:hover,
-          .close_exp:focus {
-              color: #000;
-              text-decoration: none;
-              cursor: pointer;
-          }
+        <t t-call="website.layout">
+
+
+            <style>
+                body {font-family: Arial, Helvetica, sans-serif;}
+
+                /* The Modal (background) */
+                .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                }
+
+                /* Modal Content */
+                .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%;
+                }
+
+                .modal-content_lang {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 350px;
+                }
+
+                .modal-content_exp {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%;
+                }
+
+
+
+                /* The Close Button */
+                .close {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                }
+
+                .close_lang {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                }
+                .close_exp {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                }
+
+                .close:hover,
+                .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+                }
+
+                .close_lang:hover,
+                .close_lang:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+                }
+                .close_exp:hover,
+                .close_exp:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+                }
+
+            </style>
+
+
+
+            <div  id="wrap" class="oe_structure oe_empty">
+                <div class="container">
+
+                    <!--Main Text-->
+                    <center><h3>Dear <span t-esc="partner_name"/></h3>
+                    </center>
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10 " style="text-align: justify">
+                            <p>The more up to date your profile is, the better we can match you to an abundance of opportunities
+                                around you.<br/>Have you been working on new projects? Take a minute to update your profile here.</p>
 
-        </style>
-
-
-
-        <div  id="wrap" class="oe_structure oe_empty">
-          <div class="container">
-
-  <!--Main Text-->
-            <center><h3>Dear <span t-esc="partner_name"/></h3>
-            </center>
-            <div class="row">
-              <div class="col-md-4 col-md-offset-4 text-center" style="text-align: justify">
-                <p>The more up to date your profile is, the better we can match you to an abundance of opportunities
-                  around you.</p>
-                  <p>Have you been working on new projects? Take a minute to update your profile here.</p>
-              </div>
-            </div>
-
-  <!--Form Starts Here-->
-              <!--<form t-att-action="url" method="post">-->
-                <!--<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
-                <!--<input type="hidden" name="partner_name" t-att-value="partner_name"/>-->
-
-
-                <div class="row">
-
-  <!--Contact-->
-                  <div id="summary" class="col-lg-6" t-att-style="update=='summary' and 'background-color: beige'">
-                    <h3>Contact</h3>
-                    <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
-
-                    <div class="form-group">
-                      <label for="email_from">Email:</label>
-                      <input form="update_contact" class="form-control" type="text" name="email_from" t-att-value="email_from"/><br/>
-
-                      <label for="partner_phone">Home phone:</label>
-                      <input form="update_contact" class="form-control" type="text" name="partner_phone" t-att-value="partner_phone"/><br/>
-
-                      <label for="partner_mobile">Mobile phone:</label>
-                      <input form="update_contact" class="form-control" type="text" name="partner_mobile" t-att-value="partner_mobile"/><br/>
-
-                      <br/>
-
-                      <div class="col-lg-2">
-                        <!--<input type="hidden"  id="update_contact" name="action" value="update_contact"/>-->
-                        <button form="update_contact" type="submit" class="btn btn-primary" onclick="contacts_updated_msg()">Update</button>
-                        <script>
-                          function contacts_updated_msg() {
-                              alert("Thank you, your contacts are now updated");
-                          }
-                        </script>
-
-                      </div>
-
-
-
-
-
-
-                    </div>
-                  </div>
-
-  <!--Education-->
-                  <div id="education" class="col-lg-6" t-att-style="update=='education' and 'background-color: beige'">
-                    <h3>Education</h3>
-                    <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
-
-                    <t t-if="not education">
-
-                      <div style="padding-bottom: 40px;">
-                        <h3>Please click the + button to provide us with information about your education</h3>
-                      </div>
-
-                    </t>
-                  </div>
-
-  <!--Education procedural-->
-                  <div class="col-lg-6"></div>
-
-                  <div class="col-lg-6">
-                  <t t-foreach="education" t-as="edu">
-
-
-                        <t t-set= "id" t-value="edu['id']"/>
-                        <t t-set="type" t-value="edu['type']"/>
-
-                        <div class="form-group">
-                          <input type="hidden" t-att-name="'edu'+'-'+id" t-att-value="edu['id']"/>
-
-
-                          <t t-if="type == 'university'">
-                            <center style="font-size: 20px;"><b>University</b></center>
-
-                            <input type="hidden" form="update_education" t-att-name="'school'+'-'+id" class="form-control" name="school" t-att-value="edu['school']"/><br/>
-                            <input type="hidden" form="update_education" t-att-name="'field_of_study'+'-'+id" class="form-control" name="field_of_study" t-att-value="edu['field_of_study']"/><br/>
-
-                            <label for="university">University</label>
-                            <input form="update_education" t-att-name="'university'+'-'+id" class="form-control form-education-required" type="text" name="university" t-att-value="edu['university']" required="true"/><br/>
-
-                            <label for="faculty">Faculty</label>
-                            <input form="update_education" t-att-name="'faculty'+'-'+id" class="form-control form-education-required" type="text" name="faculty" t-att-value="edu['faculty']" required="true"/><br/>
-
-                          </t>
-
-                          <t t-if="type == 'high_school'">
-                            <center style="font-size: 20px;"><b>High School</b></center>
-
-                            <input type="hidden" form="update_education" t-att-name="'degree'+'-'+id" class="form-control" name="degree" t-att-value="edu['degree']"/><br/>
-                          </t>
-
-                          <t t-if="type == 'course'">
-                            <center style="font-size: 20px;"><b>Course</b></center>
-                          </t>
-
-                          <t t-if="type != 'university'">
-
-                            <input type="hidden" form="update_education" t-att-name="'university'+'-'+id" class="form-control" name="university" t-att-value="edu['university']"/><br/>
-                            <input type="hidden" form="update_education" t-att-name="'faculty'+'-'+id" class="form-control" name="faculty" t-att-value="edu['faculty']"/><br/>
-
-                            <label for="school">School</label>
-                            <input form="update_education" t-att-name="'school'+'-'+id"  class="form-control form-education-required" type="text" name="school" t-att-value="edu['school']" required="true"/><br/>
-
-                            <label for="field_of_study">Field of study</label>
-                            <input form="update_education" t-att-name="'field_of_study'+'-'+id"  class="form-control form-education-required" type="text" name="field_of_study" t-att-value="edu['field_of_study']" required="true"/><br/>
-
-                          </t>
-
-                          <t t-if="type != 'high_school'">
-
-                            <label t-att-for="'degree'+'-'+id">Degree:</label>
-                            <input form="update_education" class="form-control form-education-required" type="text" t-att-name="'degree'+'-'+id" t-att-value="edu['degree']" required="true"/><br/>
-
-                          </t>
-
-                          <div class="row">
-
-                            <div class="col-lg-6">
-                              <label t-att-for="'from_date'+'-'+id">Start date:</label>
-                              <input form="update_education" class="form-control form-education-required" type="date" t-att-name="'from_date'+'-'+id" t-att-value="edu['from_date']" required="true"/><br/>
-                            </div>
-
-                            <div class="col-lg-6">
-
-                                <label t-att-for="'to_date'+'-'+id">End date:</label>
-                                <input form="update_education" class="form-control" type="date" t-att-name="'to_date'+'-'+id" t-att-value="edu['to_date']" required="true" /><br/>
-
-                            </div>
-                          </div>
 
                         </div>
 
-                    <t t-if="len(education) &gt; 1">
-                        <hr style="border-top: 1px dotted #000000; margin-bottom:5px; margin-top:5px;" />
-                    </t>
+                    </div>
 
-                  </t>
+                    <br/>
+                    <br/>
                     <div class="row">
-                    <div class="col col-lg-2 col-md-3 col-xs-3 col-sm-3 col-sm-2 ">
-                      <button  t-if="education" form="update_education" type="submit" class="btn btn-primary" onclick="education_updated_msg()">Update</button>
-                      <script>
-                          function education_updated_msg() {
-                              var elements = document.getElementsByClassName('form-education-required');
-                              var empty_value = false;
-                              for(var i=0; i &lt; elements.length; i++) {
-                                if (elements[i].value == "") {
-                                empty_value = true;
-                                }
-                              }
-                              if (!empty_value) {
-                                alert("Thank you, your education is now updated");
-                              }
-                          }
-                      </script>
-                    </div>
-                    <div class="col col-lg-2 col-md-3 col-xs-3 col-sm-3 offset-lg-8">
-                      <button id="new_education_id" class="btn btn-primary" style="border-radius:20px;"><b>+</b></button>
-                    </div>
-                    </div>
-  <!--Add New Education-->
-                  <div id="myModal" class="modal">
-                    <div class="modal-content">
-                      <span class="close">X</span>
 
+                        <!--Contact-->
+                        <div id="summary" class="col-lg-6" t-att-style="update=='summary' and 'background-color: gray'">
+                            <h3>Contact</h3>
+                            <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
 
-                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                        <input type="hidden" name="action" value="new_education"/>
+                            <div class="form-group">
+                                <br/>
+                                <label for="email_from">Email:</label>
+                                <input form="update_contact" class="form-control" type="text" name="email_from" t-att-value="email_from"/><br/>
 
-                        <center><h4>Select the type of education and add information</h4></center>
+                                <label for="partner_phone">Home phone:</label>
+                                <input form="update_contact" class="form-control" type="text" name="partner_phone" t-att-value="partner_phone"/><br/>
 
-                        <div class="container">
+                                <label for="partner_mobile">Mobile phone:</label>
+                                <input form="update_contact" class="form-control" type="text" name="partner_mobile" t-att-value="partner_mobile"/><br/>
 
-                          <div class="row">
+                                <br/>
 
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                              <button onclick="uni_btn_clicked()" class="btn btn-primary" name="mid_edu">University</button>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                              <button onclick="high_btn_clicked()" type="text" class="btn btn-primary" name="mid_edu">High school</button>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                              <button onclick="course_btn_clicked()" type="text" class="btn btn-primary" name="course_edu">Course</button>
-                            </div>
+                                <div class="col-lg-2">
+                                    <button form="update_contact" type="submit" class="btn btn-info" onclick="contacts_updated_msg()">Update</button>
+                                    <script>
+                                        function contacts_updated_msg() {
+                                        alert("Thank you, your contacts are now updated");
+                                        }
+                                    </script>
 
-                          </div>
-
-
-
-
-
-
-                          <div class="container" style="margin-top: 15px;">
-
-                            <div id="uni_modal" >
-
-                              <form t-att-action="url" method="post" id="new_university">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                <input type="hidden" name="action" value="new_university"/>
-
-                              <h3>Add University</h3>
-
-                              <label for="university">University</label>
-                              <input class="form-control" type="text" name="university" required="true"/><br/>
-
-                              <label for="faculty">Faculty</label>
-                              <input class="form-control" type="text" name="faculty" required="true"/><br/>
-
-                              <label for="degree">Degree</label>
-                              <input class="form-control" type="text" name="degree" required="true"/><br/>
-
-                              <div class="row">
-                                <div class="col-lg-6">
-                                  <label for="from_date">Start date:</label>
-                                  <input class="form-control" type="date" name="from_date" required="true"/><br/>
-                                </div>
-                                <div class="col-lg-6">
-                                  <label for="to_date">End date:</label>
-                                  <input class="form-control" type="date" name="to_date" required="true"/><br/>
-                                </div>
-                              </div>
-
-                                <div class="col-lg-4">
-                                  <button type="submit" class="btn btn-primary">Add Faculty</button>
-                                </div>
-                              </form>
-                            </div>
-
-
-                            <div id="high_school_modal" style="display: none;">
-
-                              <form t-att-action="url" method="post" id="new_high_school">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                <input type="hidden" name="action" value="new_high_school"/>
-
-                                <h3>Add High School</h3>
-
-                                <label for="school">High School</label>
-                                <input class="form-control" type="text" name="school" required="true"/><br/>
-
-                                <label for="field_of_study">Field of Study</label>
-                                <input class="form-control" type="text" name="field_of_study" required="true"/><br/>
-
-                                <div class="row">
-                                  <div class="col-lg-6">
-                                    <label for="from_date">Start date:</label>
-                                    <input class="form-control" type="date" name="from_date" required="true"/><br/>
-                                  </div>
-                                  <div class="col-lg-6">
-                                    <label for="to_date">End date:</label>
-                                    <input class="form-control" type="date" name="to_date" required="true"/><br/>
-                                  </div>
                                 </div>
 
-                                <div class="col-lg-4">
-                                  <button type="submit" class="btn btn-primary">Add High School</button>
-                                </div>
-                              </form>
+
+
+
+
 
                             </div>
+                        </div>
+
+                        <!--Education-->
+                        <div id="education" class="col-lg-6" t-att-style="update=='education' and 'background-color: gray'">
+                            <h3>Education <button id="new_education_id" class="btn btn-info" style="border-radius:20px; padding-bottom: 0px;padding-top: 0px; "><b>+</b></button></h3>
+                            <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
 
 
-                            <div id="course_modal" style="display: none;">
-                              <form t-att-action="url" method="post" id="new_course">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                <input type="hidden" name="action" value="new_course"/>
+                            <t t-if="not education">
 
-                                <h3>Add Course</h3>
+                                <div style="padding-bottom: 40px;">
+                                    <h3>Please click the + button to provide us with information about your education</h3>
 
-                                <label for="school">Course School</label>
-                                <input class="form-control" type="text" name="school" required="true"/><br/>
-
-                                <label for="field_of_study">Field of Study</label>
-                                <input class="form-control" type="text" name="field_of_study" required="true"/><br/>
-
-                                <label for="degree">Degree</label>
-                                <input class="form-control" type="text" name="degree" required="true"/><br/>
-
-                                <div class="row">
-                                  <div class="col-lg-6">
-                                    <label for="from_date">Start date:</label>
-                                    <input class="form-control" type="date" name="from_date" required="true"/><br/>
-                                  </div>
-                                  <div class="col-lg-6">
-                                    <label for="to_date">End date:</label>
-                                    <input class="form-control" type="date" name="to_date" required="true"/><br/>
-                                  </div>
                                 </div>
 
-                                <div class="col-lg-4">
-                                  <button type="submit" class="btn btn-primary">Add Course</button>
-                                </div>
-                              </form>
-                            </div>
-
-                          </div>
-
-                          <script>
-                            function uni_btn_clicked() {
-                              var uni_div = document.getElementById("uni_modal");
-                              var high_div = document.getElementById("high_school_modal");
-                              var course_div = document.getElementById("course_modal");
-
-                              uni_div.style.display = "block";
-                              high_div.style.display = "none";
-                              course_div.style.display = "none";
-                            };
-
-                            function high_btn_clicked() {
-                              var uni_div = document.getElementById("uni_modal");
-                              var high_div = document.getElementById("high_school_modal");
-                              var course_div = document.getElementById("course_modal");
-
-                              uni_div.style.display = "none";
-                              high_div.style.display = "block";
-                              course_div.style.display = "none";
-                            };
-
-                            function course_btn_clicked() {
-                              var uni_div = document.getElementById("uni_modal");
-                              var high_div = document.getElementById("high_school_modal");
-                              var course_div = document.getElementById("course_modal");
-
-                              uni_div.style.display = "none";
-                              high_div.style.display = "none";
-                              course_div.style.display = "block";
+                            </t>
 
 
-                            }
-                          </script>
+                        <!--Education procedural-->
 
 
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <script>
-
-                    var modal = document.getElementById('myModal');
-
-                    var btn = document.getElementById("new_education_id");
-
-                    var span = document.getElementsByClassName("close")[0];
-
-                    btn.onclick = function() {
-                        modal.style.display = "block";
-                    }
-
-                    span.onclick = function() {
-                        modal.style.display = "none";
-                    }
-
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
-                        }
-                    }
-                  </script>
-
-                    </div>
+                        <div class="col-lg-12">
+                            <t t-foreach="education" t-as="edu">
 
 
+                                <t t-set= "id" t-value="edu['id']"/>
+                                <t t-set="type" t-value="edu['type']"/>
+
+                                <div class="form-group">
+                                    <input type="hidden" t-att-name="'edu'+'-'+id" t-att-value="edu['id']"/>
 
 
-  <!--Experience-->
-                <div id="project" class="col-lg-12" t-att-style="update=='project' and 'background-color: beige'">
-                <h3>Project Experience</h3>
-                <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
+                                    <t t-if="type == 'university'">
+                                        <center style="font-size: 20px;"><b>University</b></center>
 
+                                        <input type="hidden" form="update_education" t-att-name="'school'+'-'+id" class="form-control" name="school" t-att-value="edu['school']"/><br/>
+                                        <input type="hidden" form="update_education" t-att-name="'field_of_study'+'-'+id" class="form-control" name="field_of_study" t-att-value="edu['field_of_study']"/><br/>
 
-                <t t-if="not experience">
+                                        <label for="university">University</label>
+                                        <input form="update_education" t-att-name="'university'+'-'+id" class="form-control form-education-required" type="text" name="university" t-att-value="edu['university']" required="true"/><br/>
 
-                  <div style="padding-bottom: 40px;">
-                    <h3>Please click the + button to provide us with information about your project experiences</h3>
-                  </div>
+                                        <label for="faculty">Faculty</label>
+                                        <input form="update_education" t-att-name="'faculty'+'-'+id" class="form-control form-education-required" type="text" name="faculty" t-att-value="edu['faculty']" required="true"/><br/>
 
-                </t>
-
-
-  <!--Experience procedural-->
-                  <t t-foreach="experience" t-as="exp">
-                      <div class="col-lg-12">
-
-                        <t t-set="id" t-value="exp['id']"/>
-
-                        <div class="form-group">
-
-                          <div class="container" style="padding-left:5%; padding-right:5%;">
-                            <div class="row">
-
-                              <div class="col-lg-7">
-
-                                <label t-att-for="'title'+'-'+id">Project name:</label>
-                                <input form="update_experience" class="form-control form-experience-required" type="text" t-att-name="'title'+'-'+id" t-att-value="exp['title']" required="true"/><br/>
-
-                                <label t-att-for="'company'+'-'+id">Company:</label>
-                                <input form="update_experience" class="form-control form-experience-required" type="text" t-att-name="'company'+'-'+id" t-att-value="exp['company']" required="true"/><br/>
-
-                                <div class="row">
-
-                                  <div class="col-lg-6">
-                                    <label t-att-for="'start_date'+'-'+id">Start date:</label>
-                                    <input form="update_experience" class="form-control form-experience-required" type="date" t-att-name="'start_date'+'-'+id" t-att-value="exp['start_date']" required="true"/><br/>
-                                  </div>
-
-                                  <div class="col-lg-6">
-                                    <t t-if="exp['project_in_work']==True">
-                                      <label t-att-for="'end_date'+'-'+id">End date:</label>
-                                      <t t-if="project_in_work">
-                                        <input form="update_experience" class="form-control" type="date" t-att-name="'end_date'+'-'+id" required="true"/><br/>
-                                        <!--<label t-att-for="'project_in_work'+'-'+id">Ongoing project:</label>-->
-                                        <!--<input class="form-control" type="checkbox" t-att-name="'project_in_work'+'-'+id" checked="checked"/><br/>-->
-                                      </t>
                                     </t>
 
-                                    <t t-if="exp['project_in_work']==False">
-                                        <label t-att-for="'end_date'+'-'+id">End date:</label>
-                                        <input form="update_experience" class="form-control" type="date" t-att-name="'end_date'+'-'+id" t-att-value="exp['end_date']" required="true"/><br/>
-                                        <!--<label t-att-for="'project_in_work'+'-'+id">Ongoing project:</label>-->
-                                        <!--<input class="form-control" type="checkbox" t-att-name="'project_in_work'+'-'+id"/><br/>-->
+                                    <t t-if="type == 'high_school'">
+                                        <center style="font-size: 20px;"><b>High School</b></center>
+
+                                        <input type="hidden" form="update_education" t-att-name="'degree'+'-'+id" class="form-control" name="degree" t-att-value="edu['degree']"/><br/>
                                     </t>
-                                  </div>
+
+                                    <t t-if="type == 'course'">
+                                        <center style="font-size: 20px;"><b>Course</b></center>
+                                    </t>
+
+                                    <t t-if="type != 'university'">
+
+                                        <input type="hidden" form="update_education" t-att-name="'university'+'-'+id" class="form-control" name="university" t-att-value="edu['university']"/><br/>
+                                        <input type="hidden" form="update_education" t-att-name="'faculty'+'-'+id" class="form-control" name="faculty" t-att-value="edu['faculty']"/><br/>
+
+                                        <label for="school">School</label>
+                                        <input form="update_education" t-att-name="'school'+'-'+id"  class="form-control form-education-required" type="text" name="school" t-att-value="edu['school']" required="true"/><br/>
+
+                                        <label for="field_of_study">Field of study</label>
+                                        <input form="update_education" t-att-name="'field_of_study'+'-'+id"  class="form-control form-education-required" type="text" name="field_of_study" t-att-value="edu['field_of_study']" required="true"/><br/>
+
+                                    </t>
+
+                                    <t t-if="type != 'high_school'">
+
+                                        <label t-att-for="'degree'+'-'+id">Degree:</label>
+                                        <input form="update_education" class="form-control form-education-required" type="text" t-att-name="'degree'+'-'+id" t-att-value="edu['degree']" required="true"/><br/>
+
+                                    </t>
+
+                                    <div class="row">
+
+                                        <div class="col-lg-6">
+                                            <label t-att-for="'from_date'+'-'+id">Start date:</label>
+                                            <input form="update_education" class="form-control form-education-required" type="date" t-att-name="'from_date'+'-'+id" t-att-value="edu['from_date']" required="true"/><br/>
+                                        </div>
+
+                                        <div class="col-lg-6">
+
+                                            <label t-att-for="'to_date'+'-'+id">End date:</label>
+                                            <input form="update_education" class="form-control" type="date" t-att-name="'to_date'+'-'+id" t-att-value="edu['to_date']" required="true" /><br/>
+
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                                <label t-att-for="'location'+'-'+id">Location:</label>
-                                <input form="update_experience" class="form-control form-experience-required" type="text" t-att-name="'location'+'-'+id" t-att-value="exp['location']" required="true"/><br/>
+                                <t t-if="len(education) &gt; 1">
+                                    <hr style="border-top: 1px dotted #000000; margin-bottom:5px; margin-top:5px;" />
+                                </t>
 
-                              </div>
-
-                              <div class="col-lg-5">
-
-                              <label t-att-for="'projects'+'-'+id">Project Details:</label>
-                              <textarea form="update_experience" class="form-control form-experience-required" t-att-name="'projects'+'-'+id" rows="13" required="true"><t t-esc="exp['projects']"/></textarea><br/>
-
-                              </div>
-
-                            </div>
-                          </div>
-
-                          <t t-if="len(experience) &gt; 1">
-                              <hr style="border-top: 1px dotted #000000; margin-bottom:5px; margin-top:5px;" />
-                          </t>
-
-                        </div>
-                      </div>
-                  </t>
-
-  <!--Experience buttons-->
-                    <div class="row">
-                  <div class="col col-lg-2">
-                    <button t-if="experience" form="update_experience"  type="submit" class="btn btn-primary" onclick="experience_updated_msg()">Update</button>
-                      <script>
-                          function experience_updated_msg() {
-                              var elements = document.getElementsByClassName('form-experience-required');
-                              var empty_value = false;
-                              for(var i=0; i &lt; elements.length; i++) {
-                                if (elements[i].value == "") {
-                                empty_value = true;
-                                }
-                              }
-
-                              if (!empty_value) {
-                                alert("Thank you, your project experience is now updated");
-                              }
-                          }
-                      </script>
-                  </div>
-                  <div class="col col-lg-2 offset-lg-8">
-                      <button id="new_experience_id" type="submit" class="btn btn-primary" style="border-radius:20px;"><b>+</b></button>
-                  </div>
-                    </div>
-                </div>
-
-
-  <!--Experience Modal-->
-                      <div id="myModal3" class="modal">
-                        <div class="modal-content_exp">
-                          <span class="close_exp">X</span>
-
-                          <center><h2>Project Experience:</h2></center>
-
-                          <br/>
-
-                          <form t-att-action="url" method="post" id="new_experience">
-                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <input type="hidden" name="action" value="new_experience"/>
-
-
+                            </t>
                             <div class="row">
+                                <div class="col col-lg-2 col-md-3 col-xs-3 col-sm-3 col-sm-2 ">
+                                    <button  t-if="education" form="update_education" type="submit" class="btn btn-info" onclick="education_updated_msg()">Update</button>
+                                    <script>
+                                        function education_updated_msg() {
+                                        var elements = document.getElementsByClassName('form-education-required');
+                                        var empty_value = false;
+                                        for(var i=0; i &lt; elements.length; i++) {
+                                        if (elements[i].value == "") {
+                                        empty_value = true;
+                                        }
+                                        }
+                                        if (!empty_value) {
+                                        alert("Thank you, your education is now updated");
+                                        }
+                                        }
+                                    </script>
+                                </div>
 
-                              <div class="col-lg-7">
+                            </div>
+                            <!--Add New Education-->
+                            <div id="myModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">X</span>
 
 
-                                  <label for="title">Project Name:</label>
-                                  <input class="form-control" type="text" name="title" required="true"/><br/>
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="action" value="new_education"/>
 
-                                  <label for="company">Company:</label>
-                                  <input class="form-control" type="text" name="company" required="true"/><br/>
+                                    <center><h4>Select the type of education and add information</h4></center>
+
+                                    <div class="container">
+
+                                        <div class="row">
+
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <button onclick="uni_btn_clicked()" class="btn btn-info" name="mid_edu">University</button>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <button onclick="high_btn_clicked()" type="text" class="btn btn-info" name="mid_edu">High school</button>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <button onclick="course_btn_clicked()" type="text" class="btn btn-info" name="course_edu">Course</button>
+                                            </div>
+
+                                        </div>
 
 
-                                  <div class="row">
-                                    <div class="col-lg-6">
-                                     <label for="start_date">Start date:</label>
-                                     <input class="form-control" type="date" name="start_date" required="true"/><br/>
+
+
+
+
+                                        <div class="container" style="margin-top: 15px;">
+
+                                            <div id="uni_modal" >
+
+                                                <form t-att-action="url" method="post" id="new_university">
+                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="action" value="new_university"/>
+
+                                                    <h3>Add University</h3>
+
+                                                    <label for="university">University</label>
+                                                    <input class="form-control" type="text" name="university" required="true"/><br/>
+
+                                                    <label for="faculty">Faculty</label>
+                                                    <input class="form-control" type="text" name="faculty" required="true"/><br/>
+
+                                                    <label for="degree">Degree</label>
+                                                    <input class="form-control" type="text" name="degree" required="true"/><br/>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <label for="from_date">Start date:</label>
+                                                            <input class="form-control" type="date" name="from_date" required="true"/><br/>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label for="to_date">End date:</label>
+                                                            <input class="form-control" type="date" name="to_date" required="true"/><br/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <button type="submit" class="btn btn-info">Add Faculty</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                            <div id="high_school_modal" style="display: none;">
+
+                                                <form t-att-action="url" method="post" id="new_high_school">
+                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="action" value="new_high_school"/>
+
+                                                    <h3>Add High School</h3>
+
+                                                    <label for="school">High School</label>
+                                                    <input class="form-control" type="text" name="school" required="true"/><br/>
+
+                                                    <label for="field_of_study">Field of Study</label>
+                                                    <input class="form-control" type="text" name="field_of_study" required="true"/><br/>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <label for="from_date">Start date:</label>
+                                                            <input class="form-control" type="date" name="from_date" required="true"/><br/>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label for="to_date">End date:</label>
+                                                            <input class="form-control" type="date" name="to_date" required="true"/><br/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <button type="submit" class="btn btn-info">Add High School</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+
+                                            <div id="course_modal" style="display: none;">
+                                                <form t-att-action="url" method="post" id="new_course">
+                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="action" value="new_course"/>
+
+                                                    <h3>Add Course</h3>
+
+                                                    <label for="school">Course School</label>
+                                                    <input class="form-control" type="text" name="school" required="true"/><br/>
+
+                                                    <label for="field_of_study">Field of Study</label>
+                                                    <input class="form-control" type="text" name="field_of_study" required="true"/><br/>
+
+                                                    <label for="degree">Degree</label>
+                                                    <input class="form-control" type="text" name="degree" required="true"/><br/>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <label for="from_date">Start date:</label>
+                                                            <input class="form-control" type="date" name="from_date" required="true"/><br/>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label for="to_date">End date:</label>
+                                                            <input class="form-control" type="date" name="to_date" required="true"/><br/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <button type="submit" class="btn btn-info">Add Course</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+
+                                        <script>
+                                            function uni_btn_clicked() {
+                                            var uni_div = document.getElementById("uni_modal");
+                                            var high_div = document.getElementById("high_school_modal");
+                                            var course_div = document.getElementById("course_modal");
+
+                                            uni_div.style.display = "block";
+                                            high_div.style.display = "none";
+                                            course_div.style.display = "none";
+                                            };
+
+                                            function high_btn_clicked() {
+                                            var uni_div = document.getElementById("uni_modal");
+                                            var high_div = document.getElementById("high_school_modal");
+                                            var course_div = document.getElementById("course_modal");
+
+                                            uni_div.style.display = "none";
+                                            high_div.style.display = "block";
+                                            course_div.style.display = "none";
+                                            };
+
+                                            function course_btn_clicked() {
+                                            var uni_div = document.getElementById("uni_modal");
+                                            var high_div = document.getElementById("high_school_modal");
+                                            var course_div = document.getElementById("course_modal");
+
+                                            uni_div.style.display = "none";
+                                            high_div.style.display = "none";
+                                            course_div.style.display = "block";
+
+
+                                            }
+                                        </script>
+
+
+
                                     </div>
-                                    <div class="col-lg-6">
-                                      <label for="end_date">End date:</label>
-                                      <input  class="form-control" type="date" name="end_date" required="true"/><br/>
-                                    </div>
-                                  </div>
-
-
-                                  <label for="location">Location:</label>
-                                  <input  class="form-control" type="text" name="location" required="true"/><br/>
-
-
-                              </div>
-
-                              <div class="col-lg-5">
-                                <label for="description">Project Details:</label>
-                                <textarea   class="form-control" name="projects" rows="13" required="true"/>
-                              </div>
-
-                              <br/>
-
-                              <button type="submit" class="btn btn-primary pull-right" style="border-radius:20px;"><b>+</b></button>
+                                </div>
 
                             </div>
 
-                          </form>
+                            <script>
+
+                                var modal = document.getElementById('myModal');
+
+                                var btn = document.getElementById("new_education_id");
+
+                                var span = document.getElementsByClassName("close")[0];
+
+                                btn.onclick = function() {
+                                modal.style.display = "block";
+                                }
+
+                                span.onclick = function() {
+                                modal.style.display = "none";
+                                }
+
+                                window.onclick = function(event) {
+                                if (event.target == modal) {
+                                modal.style.display = "none";
+                                }
+                                }
+                            </script>
+
                         </div>
-                      </div>
+
+</div>
+
+
+                        <!--Experience-->
+                        <br/>
+                        <div id="project" class="col-lg-12" t-att-style="update=='project' and 'background-color: gray'">
+                            <div class="row">
+                                <div class="col-3">
+                                    <h3>Project Experience </h3>
+                                </div>
+                                <div class="col-9">
+                                    <h5 style="color: blue; margin-bottom: 0px; margin-top: 6px;">Have you done a new project recently?Then just <a id="new_experience_id"  href="#" style="border-radius:20px;"><b style="color: blue">add new one here!</b></a></h5>
+                                </div>
+                            </div>
+
+                            <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
+
+
+                            <t t-if="not experience">
+
+                                <div style="padding-bottom: 40px;">
+
+                                </div>
+
+                            </t>
+
+
+                            <!--Experience procedural-->
+                            <br/>
+                            <t t-foreach="experience" t-as="exp">
+                                <div class="col-lg-12">
+
+                                    <t t-set="id" t-value="exp['id']"/>
+
+                                    <div class="form-group">
+
+                                        <div class="container" >
+                                            <div class="row">
+
+                                                <div class="col-lg-7" style="padding: 0;">
+
+                                                    <label t-att-for="'title'+'-'+id">Project name:</label>
+                                                    <input form="update_experience" class="form-control form-experience-required" type="text" t-att-name="'title'+'-'+id" t-att-value="exp['title']" required="true"/><br/>
+
+                                                    <label t-att-for="'company'+'-'+id">Company:</label>
+                                                    <input form="update_experience" class="form-control form-experience-required" type="text" t-att-name="'company'+'-'+id" t-att-value="exp['company']" required="true"/><br/>
+
+                                                    <div class="row">
+
+                                                        <div class="col-lg-6">
+                                                            <label t-att-for="'start_date'+'-'+id">Start date:</label>
+                                                            <input form="update_experience" class="form-control form-experience-required" type="date" t-att-name="'start_date'+'-'+id" t-att-value="exp['start_date']" required="true"/><br/>
+                                                        </div>
+
+                                                        <div class="col-lg-6">
+                                                            <t t-if="exp['project_in_work']==True">
+                                                                <label t-att-for="'end_date'+'-'+id">End date:</label>
+                                                                <t t-if="project_in_work">
+                                                                    <input form="update_experience" class="form-control" type="date" t-att-name="'end_date'+'-'+id" required="true"/><br/>
+                                                                    <!--<label t-att-for="'project_in_work'+'-'+id">Ongoing project:</label>-->
+                                                                    <!--<input class="form-control" type="checkbox" t-att-name="'project_in_work'+'-'+id" checked="checked"/><br/>-->
+                                                                </t>
+                                                            </t>
+
+                                                            <t t-if="exp['project_in_work']==False">
+                                                                <label t-att-for="'end_date'+'-'+id">End date:</label>
+                                                                <input form="update_experience" class="form-control" type="date" t-att-name="'end_date'+'-'+id" t-att-value="exp['end_date']" required="true"/><br/>
+                                                                <!--<label t-att-for="'project_in_work'+'-'+id">Ongoing project:</label>-->
+                                                                <!--<input class="form-control" type="checkbox" t-att-name="'project_in_work'+'-'+id"/><br/>-->
+                                                            </t>
+                                                        </div>
+                                                    </div>
+
+                                                    <label t-att-for="'location'+'-'+id">Location:</label>
+                                                    <input form="update_experience" class="form-control form-experience-required" type="text" t-att-name="'location'+'-'+id" t-att-value="exp['location']" required="true"/><br/>
+
+                                                </div>
+
+                                                <div class="col-lg-5">
+
+                                                    <label t-att-for="'projects'+'-'+id">Project Details:</label>
+                                                    <textarea form="update_experience" class="form-control form-experience-required" t-att-name="'projects'+'-'+id" rows="13" required="true"><t t-esc="exp['projects']"/></textarea><br/>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <t t-if="len(experience) &gt; 1">
+                                            <hr style="border-top: 1px dotted #000000; margin-bottom:5px; margin-top:5px;" />
+                                        </t>
+
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!--Experience buttons-->
+                            <div class="row">
+                                <div class="col col-lg-2">
+                                    <button t-if="experience" form="update_experience"  type="submit" class="btn btn-info"  onclick="experience_updated_msg()">Update</button>
+                                    <script>
+                                        function experience_updated_msg() {
+                                        var elements = document.getElementsByClassName('form-experience-required');
+                                        var empty_value = false;
+                                        for(var i=0; i &lt; elements.length; i++) {
+                                        if (elements[i].value == "") {
+                                        empty_value = true;
+                                        }
+                                        }
+
+                                        if (!empty_value) {
+                                        alert("Thank you, your project experience is now updated");
+                                        }
+                                        }
+                                    </script>
+                                </div>
+                                <!--                  <div class="col col-lg-2 offset-lg-8">-->
+                                <!--                      <a id="new_experience_id"  href="#" style="border-radius:20px;"><b>add new one here!</b></a>-->
+                                <!--                  </div>-->
+                            </div>
+                        </div>
+
+
+                        <!--Experience Modal-->
+                        <div id="myModal3" class="modal">
+                            <div class="modal-content_exp">
+                                <span class="close_exp">X</span>
+
+                                <center><h2>Project Experience:</h2></center>
+
+                                <br/>
+
+                                <form t-att-action="url" method="post" id="new_experience">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="action" value="new_experience"/>
+
+
+                                    <div class="row">
+
+                                        <div class="col-lg-7">
+
+
+                                            <label for="title">Project Name:</label>
+                                            <input class="form-control" type="text" name="title" required="true"/><br/>
+
+                                            <label for="company">Company:</label>
+                                            <input class="form-control" type="text" name="company" required="true"/><br/>
+
+
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <label for="start_date">Start date:</label>
+                                                    <input class="form-control" type="date" name="start_date" required="true"/><br/>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label for="end_date">End date:</label>
+                                                    <input  class="form-control" type="date" name="end_date" required="true"/><br/>
+                                                </div>
+                                            </div>
+
+
+                                            <label for="location">Location:</label>
+                                            <input  class="form-control" type="text" name="location" required="true"/><br/>
+
+
+                                        </div>
+
+                                        <div class="col-lg-5" style="padding-right: 0px;">
+                                            <label for="description">Project Details:</label>
+                                            <textarea   class="form-control" name="projects" rows="13" required="true"/>
+                                        </div>
+
+                                        <br/>
+
+                                        <button type="submit" class="btn btn-info pull-right" style="border-radius:20px;"><b>+</b></button>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
 
 
                         <script>
@@ -652,17 +662,17 @@
                             var span_exp = document.getElementsByClassName("close_exp")[0];
 
                             btn_exp.onclick = function() {
-                                modal_exp.style.display = "block";
+                            modal_exp.style.display = "block";
                             }
 
                             span_exp.onclick = function() {
-                                modal_exp.style.display = "none";
+                            modal_exp.style.display = "none";
                             }
 
                             window.onclick = function(event) {
-                                if (event.target == modal_exp) {
-                                    modal_exp.style.display = "none";
-                                }
+                            if (event.target == modal_exp) {
+                            modal_exp.style.display = "none";
+                            }
                             }
                         </script>
 
@@ -672,233 +682,233 @@
 
 
 
-<!--Accomplishments-->
-                <div class="col-lg-12">
-                <h3>Accomplishments</h3>
-                <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
-                <div class="row">
+                        <!--Accomplishments-->
+                        <div class="col-lg-12">
+                            <h3>Accomplishments</h3>
+                            <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
+                            <div class="row">
 
-                  <div class="col-lg-4">
-                    <h3></h3>
-                    <div class="form-group">
+                                <div class="col-lg-7">
+                                    <h3></h3>
+                                    <div class="form-group">
 
-                      <label id="certificates" for="certificates" t-att-style="update=='certificates' and 'background-color: beige'">Certificates:</label>
-                      <textarea form="update_accomplishments" class="form-control" name="certificates" rows="3" cols="40"><t t-esc="certificates"/></textarea><br/>
+                                        <label id="certificates" for="certificates" t-att-style="update=='certificates' and 'background-color: gray'">Certificates:</label>
+                                        <input form="update_accomplishments" class="form-control" name="certificates"><t t-esc="certificates"/></input><br/>
 
-                      <label id="technical" for="key_skills" t-att-style="update=='technical' and 'background-color: beige'">Key skills:</label>
-                      <textarea form="update_accomplishments" class="form-control" name="key_skills" rows="3" cols="40"><t t-esc="key_skills"/></textarea><br/>
+                                        <label id="technical" for="key_skills" t-att-style="update=='technical' and 'background-color: gray'">Key technical skills:</label>
+                                        <input form="update_accomplishments" class="form-control" name="key_skills" rows="3" cols="40"><t t-esc="key_skills"/></input><br/>
 
-                      <input  form="update_accomplishments" type="hidden" name="languages"/>
+                                        <input  form="update_accomplishments" type="hidden" name="languages"/>
 
-                      <label id="languages" for="languages" t-att-style="update=='languages' and 'background-color: beige'">Languages:</label>
-                      <!--<input form="update_accomplishments" class="form-control magicsearch" id="basic" type="text" name="languages" t-att-value="languages"/><br/>-->
+                                        <label id="languages" for="languages" t-att-style="update=='languages' and 'background-color: gray'">Languages:</label>
+                                        <!--<input form="update_accomplishments" class="form-control magicsearch" id="basic" type="text" name="languages" t-att-value="languages"/><br/>-->
 
-                        <button id="new_languages_id" class="btn btn-primary pull-right" style="border-radius:20px;"><b>+</b></button>
+                                        <button id="new_languages_id" class="btn btn-info" style="border-radius:20px; padding-bottom: 0px;padding-top: 0px;"><b>+</b></button>
 
 
 
-                        <t t-foreach="language" t-as="lan">
+                                        <t t-foreach="language" t-as="lan">
 
-                            <div>
-                                <h4><b><t t-esc="lan['language']"/></b> <div style="font-size: 14px;"><t t-esc="lan['proficiency']"/></div> </h4>
+                                            <div>
+                                                <h4><b><t t-esc="lan['language']"/></b> <div style="font-size: 14px;"><t t-esc="lan['proficiency']"/></div> </h4>
+                                            </div>
+
+                                            <br/>
+
+                                        </t>
+
+                                        <!--Languages Modal-->
+                                        <div id="myModal2" class="modal">
+                                            <div class="modal-content_lang">
+                                                <span class="close_lang">X</span>
+
+                                                <center><h2>Languages:</h2></center>
+
+                                                <br/>
+
+                                                <form t-att-action="url" method="post" id="update_languages">
+                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="action" value="update_languages"/>
+
+
+                                                    <t t-foreach="language" t-as="lan">
+
+                                                        <t t-set= "id" t-value="lan['id']"/>
+
+
+                                                        <center>
+                                                            <select t-att-name="'language'+'-'+id" style="width: 90%;">
+                                                                <option selected="selected"><t t-esc="lan['language']"/></option>
+                                                                <t t-foreach="all_languages" t-as="all_lang">
+                                                                    <option><t t-esc="all_lang['longName']"/></option>
+                                                                </t>
+                                                            </select>
+                                                        </center>
+
+
+                                                        <center>
+                                                            <select t-att-name="'proficiency'+'-'+id" style="width: 90%; margin-bottom:15px;">
+                                                                <option selected="selected"><t t-esc="lan['proficiency']"/></option>
+                                                                <option>Elementary proficiency</option>
+                                                                <option>Limited working proficiency</option>
+                                                                <option>Professional working proficiency</option>
+                                                                <option>Full professional proficiency</option>
+                                                                <option>Native or bilingual proficiency</option>
+                                                            </select>
+                                                        </center>
+
+                                                    </t>
+
+                                                    <center><button  type="submit" class="btn btn-info"  onclick="languages_updated_msg()">Update</button></center>
+
+                                                    <script>
+                                                        function languages_updated_msg() {
+                                                        alert("Thank you , your languages are now updated");
+                                                        }
+                                                    </script>
+
+                                                    <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
+
+
+                                                    <center><h3>Add new language:</h3></center>
+
+                                                    <center>
+                                                        <select form="new_language" name="language" style="width: 90%;">
+                                                            <option selected="selected">English</option>
+                                                            <t t-foreach="all_languages" t-as="all_lang">
+                                                                <option><t t-esc="all_lang['longName']"/></option>
+                                                            </t>
+                                                        </select>
+                                                    </center>
+
+                                                    <center>
+                                                        <select form="new_language" name="proficiency" style="width: 90%;">
+                                                            <option>Elementary proficiency</option>
+                                                            <option>Limited working proficiency</option>
+                                                            <option>Professional working proficiency</option>
+                                                            <option>Full professional proficiency</option>
+                                                            <option>Native or bilingual proficiency</option>
+                                                        </select>
+                                                    </center>
+
+                                                    <center><button form="new_language" type="submit" class="btn btn-info" style="margin: 10px;">Add</button></center>
+
+
+                                                </form>
+
+
+                                                <datalist id="languages_list">
+                                                    <t t-foreach="all_languages" t-as="all_lang">
+                                                        <option t-att-value="all_lang['longName']"/>
+                                                    </t>
+                                                </datalist>
+
+                                            </div>
+                                        </div>
+
+
+                                        <script>
+
+                                            var modal_lang = document.getElementById('myModal2');
+
+                                            var btn_lang = document.getElementById("new_languages_id");
+
+                                            var span_lang = document.getElementsByClassName("close_lang")[0];
+
+                                            btn_lang.onclick = function() {
+                                            modal_lang.style.display = "block";
+                                            }
+
+                                            span_lang.onclick = function() {
+                                            modal_lang.style.display = "none";
+                                            }
+
+                                            window.onclick = function(event) {
+                                            if (event.target == modal_lang) {
+                                            modal_lang.style.display = "none";
+                                            }
+                                            }
+                                        </script>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5" >
+                                    <h4>Professional Profile</h4>
+                                    <div class="form-group">
+                                        <textarea form="update_accomplishments" class="form-control" name="description" rows="14"><t t-esc="description"/></textarea>
+                                    </div>
+                                </div>
                             </div>
 
-                            <br/>
 
-                        </t>
-
-  <!--Languages Modal-->
-                      <div id="myModal2" class="modal">
-                        <div class="modal-content_lang">
-                          <span class="close_lang">X</span>
-
-                          <center><h2>Languages:</h2></center>
-
-                          <br/>
-
-                          <form t-att-action="url" method="post" id="update_languages">
-                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <input type="hidden" name="action" value="update_languages"/>
-
-
-                            <t t-foreach="language" t-as="lan">
-
-                              <t t-set= "id" t-value="lan['id']"/>
-
-
-                              <center>
-                                <select t-att-name="'language'+'-'+id" style="width: 90%;">
-                                  <option selected="selected"><t t-esc="lan['language']"/></option>
-                                  <t t-foreach="all_languages" t-as="all_lang">
-                                    <option><t t-esc="all_lang['longName']"/></option>
-                                  </t>
-                                </select>
-                              </center>
-
-
-                              <center>
-                                <select t-att-name="'proficiency'+'-'+id" style="width: 90%; margin-bottom:15px;">
-                                  <option selected="selected"><t t-esc="lan['proficiency']"/></option>
-                                  <option>Elementary proficiency</option>
-                                  <option>Limited working proficiency</option>
-                                  <option>Professional working proficiency</option>
-                                  <option>Full professional proficiency</option>
-                                  <option>Native or bilingual proficiency</option>
-                                </select>
-                              </center>
-
-                            </t>
-
-                            <center><button  type="submit" class="btn btn-primary"  onclick="languages_updated_msg()">Update</button></center>
-
-                        <script>
-                          function languages_updated_msg() {
-                              alert("Thank you , your languages are now updated");
-                          }
-                        </script>
-
-                            <hr style="border-top: 1px solid #000000; margin-bottom:5px; margin-top:5px;" />
-
-
-                            <center><h3>Add new language:</h3></center>
-
-                            <center>
-                                <select form="new_language" name="language" style="width: 90%;">
-                                  <option selected="selected">English</option>
-                                  <t t-foreach="all_languages" t-as="all_lang">
-                                    <option><t t-esc="all_lang['longName']"/></option>
-                                  </t>
-                                </select>
-                              </center>
-
-                            <center>
-                              <select form="new_language" name="proficiency" style="width: 90%;">
-                                <option>Elementary proficiency</option>
-                                <option>Limited working proficiency</option>
-                                <option>Professional working proficiency</option>
-                                <option>Full professional proficiency</option>
-                                <option>Native or bilingual proficiency</option>
-                              </select>
-                            </center>
-
-                              <center><button form="new_language" type="submit" class="btn btn-primary" style="margin: 10px;">Add</button></center>
-
-
-                          </form>
-
-
-                          <datalist id="languages_list">
-                            <t t-foreach="all_languages" t-as="all_lang">
-                              <option t-att-value="all_lang['longName']"/>
-                            </t>
-                          </datalist>
+                            <button form="update_accomplishments" type="submit" class="btn btn-info" onclick="accomplishments_updated_msg()">Update</button>
+                            <script>
+                                function accomplishments_updated_msg() {
+                                alert("Thank you , your accomplishments are now updated");
+                                }
+                            </script>
 
                         </div>
-                      </div>
-
-
-                        <script>
-
-                            var modal_lang = document.getElementById('myModal2');
-
-                            var btn_lang = document.getElementById("new_languages_id");
-
-                            var span_lang = document.getElementsByClassName("close_lang")[0];
-
-                            btn_lang.onclick = function() {
-                                modal_lang.style.display = "block";
-                            }
-
-                            span_lang.onclick = function() {
-                                modal_lang.style.display = "none";
-                            }
-
-                            window.onclick = function(event) {
-                                if (event.target == modal_lang) {
-                                    modal_lang.style.display = "none";
-                                }
-                            }
-                        </script>
-
-
                     </div>
-                  </div>
 
-                  <div class="col-lg-4" >
-                    <h3>Professional Profile</h3>
-                    <div class="form-group">
-                      <textarea form="update_accomplishments" class="form-control" name="description" rows="14"><t t-esc="description"/></textarea>
-                    </div>
-                  </div>
+
+
+
+
+
+
+                    <!--</form>-->
+                    <form t-att-action="url" method="post" id="new_experience">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="action" value="new_experience"/>
+                    </form>
+
+
+                    <form t-att-action="url" method="post" id="update_contact">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="action" value="update_contact"/>
+                    </form>
+
+                    <form t-att-action="url" method="post" id="update_education">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="action" value="update_education"/>
+                    </form>
+
+                    <form t-att-action="url" method="post" id="update_experience">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="action" value="update_experience"/>
+                    </form>
+
+                    <form t-att-action="url" method="post" id="update_accomplishments">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="action" value="update_accomplishments"/>
+                    </form>
+                    <form t-att-action="url" method="post" id="new_language">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="action" value="new_language"/>
+                    </form>
+
+
+
+
+
+
                 </div>
-
-
-                  <button form="update_accomplishments" type="submit" class="btn btn-primary" onclick="accomplishments_updated_msg()">Update</button>
-                      <script>
-                          function accomplishments_updated_msg() {
-                              alert("Thank you , your accomplishments are now updated");
-                          }
-                      </script>
-
-                </div>
-                </div>
-
-
-
-
-
-
-
-              <!--</form>-->
-              <form t-att-action="url" method="post" id="new_experience">
-                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                <input type="hidden" name="action" value="new_experience"/>
-              </form>
-
-
-              <form t-att-action="url" method="post" id="update_contact">
-                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                  <input type="hidden" name="action" value="update_contact"/>
-              </form>
-
-              <form t-att-action="url" method="post" id="update_education">
-                  <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                  <input type="hidden" name="action" value="update_education"/>
-              </form>
-
-              <form t-att-action="url" method="post" id="update_experience">
-                  <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                  <input type="hidden" name="action" value="update_experience"/>
-              </form>
-
-              <form t-att-action="url" method="post" id="update_accomplishments">
-                  <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                  <input type="hidden" name="action" value="update_accomplishments"/>
-              </form>
-              <form t-att-action="url" method="post" id="new_language">
-                  <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                  <input type="hidden" name="action" value="new_language"/>
-              </form>
-
-
-
-
-
-
-          </div>
-        </div>
-      </t>
+            </div>
+        </t>
     </template>
 
     <template id="thank_page" name="Thank you" >
-      <t t-call="website.layout">
-        <div class="oe_structure">
-          <div class="container">
-            <center><h3>Thank you <span t-esc="partner_name"/></h3></center>
-            <p>
-            </p>
-          </div>
-        </div>
-      </t>
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <center><h3>Thank you <span t-esc="partner_name"/></h3></center>
+                    <p>
+                    </p>
+                </div>
+            </div>
+        </t>
     </template>
-  </odoo>
+</odoo>

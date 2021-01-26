@@ -94,7 +94,6 @@
                    <group>
                      <field name="start_date"/>
                      <field name="end_date"/>
-                   <!--<field name="project_in_work"/>-->
                    </group>
                    <group>
                      <field name="company"/>
@@ -109,7 +108,6 @@
             <field name="name">Experience_view</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.applicant.experience</field>
-            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">form</field>
             <field name="view_id" ref="experience_form"/>
         </record>
@@ -154,7 +152,6 @@
             <field name="name">education_view</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.applicant.education</field>
-            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">form</field>
             <field name="view_id" ref="experience_form"/>
         </record>
